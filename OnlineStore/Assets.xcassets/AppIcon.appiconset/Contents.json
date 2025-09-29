@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Icono de compra en línea.png",
+      "filename" : "AppLogo.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Icono de compra en línea 1.png",
+      "filename" : "AppLogo 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "Icono de compra en línea 2.png",
+      "filename" : "AppLogo 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
