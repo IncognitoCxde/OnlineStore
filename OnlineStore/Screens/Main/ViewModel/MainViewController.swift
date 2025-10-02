@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import SnapKit
+import DesignSystem
 
 class MainViewController: UIViewController {
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGrey
         
     }
-
+    
 }
 
