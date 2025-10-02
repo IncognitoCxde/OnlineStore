@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import DesignSystem
 
 class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGrey
+        view.backgroundColor = AppColors.lightGrey
     }
 
 }
