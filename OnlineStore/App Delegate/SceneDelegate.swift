@@ -10,15 +10,16 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
+    var onboardingCoordinator: OnboardingCoordinator?
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        let window = UIWindow(windowScene: windowScene)
+        onboardingCoordinator = OnboardingCoordinator(window: window)
+        onboardingCoordinator?.start()
         
-        window = UIWindow(windowScene: windowScene)
-        
-        let tabBar = TabBarController()
-        window?.rootViewController = tabBar
-        window?.makeKeyAndVisible()
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
