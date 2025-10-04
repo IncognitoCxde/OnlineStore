@@ -37,6 +37,8 @@ final class OnboardingContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        detailsUI()
+        setUpConstraints() 
         configure(with: slide)
     }
     
@@ -56,6 +58,16 @@ final class OnboardingContentViewController: UIViewController {
         view.backgroundColor = AppColors.lightGrey
         view.clipsToBounds = false
         
+        view.addSubview(imageWrapper)
+        imageWrapper.addSubview(imageView)
+        view.addSubview(titleLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(buttonContainer)
+        
+        actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
+    }
+    
+    private func detailsUI() {
         imageWrapper.backgroundColor = .clear
         imageWrapper.layer.masksToBounds = false
         
@@ -78,7 +90,7 @@ final class OnboardingContentViewController: UIViewController {
         actionButton.layer.cornerRadius = 12
         actionButton.clipsToBounds = false
         actionButton.layer.masksToBounds = false
-        actionButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
+//        actionButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
         
         buttonContainer.backgroundColor = .clear
         buttonContainer.clipsToBounds = false
@@ -88,13 +100,9 @@ final class OnboardingContentViewController: UIViewController {
         actionButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        view.addSubview(imageWrapper)
-        imageWrapper.addSubview(imageView)
-        view.addSubview(titleLabel)
-        view.addSubview(descriptionLabel)
-        view.addSubview(buttonContainer)
-        
+    }
+    
+    private func setUpConstraints() {
         imageWrapper.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
             make.leading.trailing.equalToSuperview()
@@ -120,8 +128,6 @@ final class OnboardingContentViewController: UIViewController {
             make.trailing.equalToSuperview().inset(24)
             make.height.equalTo(48)
         }
-
-        actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
     }
     
     // MARK: - Shadow
