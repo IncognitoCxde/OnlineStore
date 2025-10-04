@@ -9,4 +9,5 @@ final class MainViewModel {
         Category(name: "Furniture"),
         Category(name: "Miscellaneous"),
     ]
+    
 }

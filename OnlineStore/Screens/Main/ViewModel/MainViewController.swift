@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.5),
+                    widthDimension: .estimated(200),
                     heightDimension: .absolute(100)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(
@@ -103,12 +103,8 @@ class MainViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
                 section.interGroupSpacing = 5
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16)
                 
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(54))
-                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                
-                section.boundarySupplementaryItems = [sectionHeader]
                 return section
             case .products, .specials:
                 return nil
@@ -133,8 +129,8 @@ class MainViewController: UIViewController {
         view.addSubview(ultimateCollectionView)
         
         ultimateCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(actualAddressPick.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(5)
+            make.top.equalTo(actualAddressPick.snp.bottom)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }

@@ -4,13 +4,13 @@ import UIKit
 import DesignSystem
 import SnapKit
 
-class CategoriesCollectionViewCell: UICollectionViewCell {
+final class CategoriesCollectionViewCell: UICollectionViewCell {
     
     static let identifier = String(describing: CategoriesCollectionViewCell.self)
 
     let label: UILabel = {
         let label = UILabel()
-        label.font = AppFont.medium_18pt(size: 14)
+        label.font = AppFont.medium_18pt(size: 17)
         label.textColor = AppColors.arsenicDark
         label.textAlignment = .center
         return label
