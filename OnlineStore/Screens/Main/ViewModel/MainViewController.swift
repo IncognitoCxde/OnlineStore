@@ -38,6 +38,21 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    var selectedIndexPath = IndexPath(item: 0, section: 0)
+    
+    private let selectionBackground: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.vanilla
+        view.layer.cornerRadius = 18
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = AppColors.customBlue.cgColor
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowOffset = CGSize(width: 0, height: 6)
+        view.layer.shadowRadius = 12
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
     // MARK: - viewDidLoad
     
     override func viewDidLoad() {
@@ -133,6 +148,7 @@ class MainViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
+        
     }
     
     // MARK: - Handle Location Button
@@ -142,35 +158,3 @@ class MainViewController: UIViewController {
     }
 
 }
-
-// MARK: - UICollectionView DataSource and Delegate
-
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return SectionType.allCases.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let sectionType = SectionType(rawValue: section) else { return 0 }
-        switch sectionType {
-        case .categories:
-            return viewModel.categories.count
-        case .products, .specials:
-            return 0
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sectionType = SectionType(rawValue: indexPath.section) else { fatalError() }
-        
-        switch sectionType {
-        case .categories:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as! CategoriesCollectionViewCell
-            cell.configure(with: viewModel.categories[indexPath.item].name)
-            return cell
-        case .products, .specials:
-            return UICollectionViewCell()
-        }
-    }
-}
-
