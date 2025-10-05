@@ -21,15 +21,16 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         bg.layer.cornerRadius = 12
         bg.layer.shadowColor = AppColors.customBlue.cgColor
         bg.layer.shadowOffset = CGSize(width: 6, height: 2)
-        bg.layer.shadowOpacity = 1
+        bg.layer.shadowOpacity = 0.8
         bg.layer.shadowRadius = 5
         return bg
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureBg()
+        contentView.addSubview(bgView)
         contentView.addSubview(label)
+        configureBg()
         configureConstraints()
     }
     
@@ -40,18 +41,22 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     func configureConstraints() {
         label.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
-            make.leading.equalTo(contentView.snp.leading)
-            make.trailing.equalTo(contentView.snp.trailing).inset(10)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
     
     func configureBg() {
-        contentView.addSubview(bgView)
-
         bgView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(label.snp.top).offset(-4)
+            make.bottom.equalTo(label.snp.bottom).offset(4)
+            make.leading.equalTo(label.snp.leading).offset(1)
+            make.trailing.equalTo(label.snp.trailing).offset(1)
         }
+//        bgView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
     }
     
     func configure(with text: String, selected: Bool) {

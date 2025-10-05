@@ -1,6 +1,7 @@
 // MARK: - UICollectionView DataSource and Delegate
 
 import UIKit
+import DesignSystem
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -12,7 +13,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch sectionType {
         case .categories:
             return viewModel.categories.count
-        case .products, .specials:
+        case .products:
+            return viewModel.products.count
+        case .specials:
             return 0
         }
     }
@@ -26,7 +29,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let isSelected = indexPath == selectedIndexPath
             cell.configure(with: viewModel.categories[indexPath.item].name, selected: isSelected)
             return cell
-        case .products, .specials:
+        case .products:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as! ProductCollectionViewCell
+            let product = viewModel.products[indexPath.item]
+            cell.configure(with: product)
+            return cell
+        case .specials:
             return UICollectionViewCell()
         }
     }

@@ -1,9 +1,4 @@
-//
-//  ProfileViewController.swift
-//  OnlineStore
-//
-//  Created by iMacbook on 9/27/25.
-//
+// Profile VC
 
 import UIKit
 import DesignSystem

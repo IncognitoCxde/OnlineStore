@@ -1,9 +1,4 @@
-//
-//  TabBarController.swift
-//  OnlineStore
-//
-//  Created by iMacbook on 9/27/25.
-//
+// TabBar Controller
 
 import UIKit
 import DesignSystem
@@ -17,6 +12,7 @@ class TabBarController: UITabBarController {
     
     func setUpTabBar() {
         let tabBar = UITabBar()
+        tabBar.backgroundColor = .white
         setValue(tabBar, forKey: "tabBar")
         
         
@@ -34,6 +30,26 @@ class TabBarController: UITabBarController {
         
         self.setViewControllers([mainVC, wishVC, searchVC, profileVC], animated: true)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let itemOffset: CGFloat = 15
+        
+        var tabBarFrame = tabBar.frame
+        
+        tabBarFrame.origin.y -= itemOffset / 2
+        tabBarFrame.size.height += itemOffset
+        tabBar.frame = tabBarFrame
+        
+        for tabBarSubView in tabBar.subviews {
+            if let tabBarButton = tabBarSubView as? UIControl {
+                var frame = tabBarButton.frame
+                frame.origin.y += itemOffset / 2
+                tabBarButton.frame = frame
+            }
+        }
     }
 
 }

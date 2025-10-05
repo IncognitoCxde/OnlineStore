@@ -1,9 +1,4 @@
-//
-//  WishlistViewController.swift
-//  OnlineStore
-//
-//  Created by iMacbook on 9/27/25.
-//
+// WishList VC
 
 import UIKit
 import DesignSystem

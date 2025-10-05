@@ -58,9 +58,15 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppColors.lightGrey
+        tabBarController?.tabBar.dropShadow()
+        setUpFunctions()
+    }
+    
+    func setUpFunctions() {
         addSubViews()
         configureConstraints()
         configureCollectionConstraints()
+        bindViewModel()
     }
     
     // MARK: - AddSubViews
@@ -92,6 +98,17 @@ class MainViewController: UIViewController {
         actualAddressPick.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
     }
     
+    // MARK: - Data Centre
+    
+    func bindViewModel() {
+        viewModel.onDataUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.ultimateCollectionView.reloadData()
+            }
+        }
+        viewModel.loadMockData()
+    }
+    
     // MARK: - Compositional Layout
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -100,7 +117,7 @@ class MainViewController: UIViewController {
             switch sectionType {
             case .categories:
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.5),
+                    widthDimension: .fractionalWidth(0.55),
                     heightDimension: .fractionalHeight(0.3)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -121,7 +138,26 @@ class MainViewController: UIViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16)
                 
                 return section
-            case .products, .specials:
+            case .products:
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(0.5),
+                    heightDimension: .estimated(250)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .estimated(250)
+                )
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item, item])
+
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .none
+                section.interGroupSpacing = 15
+                return section
+                
+            case .specials:
                 return nil
                 
             }
@@ -133,6 +169,7 @@ class MainViewController: UIViewController {
     private lazy var ultimateCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
+        collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
