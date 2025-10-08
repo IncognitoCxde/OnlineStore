@@ -128,7 +128,7 @@ class MainViewController: UIViewController {
             case .products:
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(0.48),
-                    heightDimension: .absolute(230)
+                    heightDimension: .absolute(240)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 0)
