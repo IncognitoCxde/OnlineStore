@@ -1,9 +1,4 @@
-//
-//  SearchViewController.swift
-//  OnlineStore
-//
-//  Created by iMacbook on 9/27/25.
-//
+// Search VC
 
 import UIKit
 import DesignSystem
