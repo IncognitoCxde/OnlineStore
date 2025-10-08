@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57200BC02E8959090079250D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 57200BBF2E8959090079250D /* SnapKit */; };
 		572012CB2E8EC1ED0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CA2E8EC1ED0079250D /* DesignSystem */; };
 		572012CE2E8EC21C0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CD2E8EC21C0079250D /* DesignSystem */; };
 		572012D02E8EC9CB0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
 		572012D32E8EC9F60079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012D22E8EC9F60079250D /* DesignSystem */; };
 		57201C522E9287D80079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 57201C512E9287D80079250D /* DesignSystem */; };
+		5720267F2E9618400079250D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5720267E2E9618400079250D /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +47,8 @@
 			files = (
 				572012D32E8EC9F60079250D /* DesignSystem in Frameworks */,
 				572012CE2E8EC21C0079250D /* DesignSystem in Frameworks */,
-				57200BC02E8959090079250D /* SnapKit in Frameworks */,
 				57201C522E9287D80079250D /* DesignSystem in Frameworks */,
+				5720267F2E9618400079250D /* SnapKit in Frameworks */,
 				572012CB2E8EC1ED0079250D /* DesignSystem in Frameworks */,
 				572012D02E8EC9CB0079250D /* DesignSystem in Frameworks */,
 			);
@@ -93,12 +93,12 @@
 			);
 			name = OnlineStore;
 			packageProductDependencies = (
-				57200BBF2E8959090079250D /* SnapKit */,
 				572012CA2E8EC1ED0079250D /* DesignSystem */,
 				572012CD2E8EC21C0079250D /* DesignSystem */,
 				572012CF2E8EC9CB0079250D /* DesignSystem */,
 				572012D22E8EC9F60079250D /* DesignSystem */,
 				57201C512E9287D80079250D /* DesignSystem */,
+				5720267E2E9618400079250D /* SnapKit */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
@@ -129,8 +129,8 @@
 			mainGroup = 5720068C2E87DD3C0079250D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				57200BBE2E8959090079250D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */,
+				5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -377,7 +377,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		57200BBE2E8959090079250D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -388,11 +388,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		57200BBF2E8959090079250D /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 57200BBE2E8959090079250D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
 		572012CA2E8EC1ED0079250D /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;
@@ -412,6 +407,11 @@
 		57201C512E9287D80079250D /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;
+		};
+		5720267E2E9618400079250D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

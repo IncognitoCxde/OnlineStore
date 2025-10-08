@@ -40,19 +40,6 @@ class MainViewController: UIViewController {
     
     var selectedIndexPath = IndexPath(item: 0, section: 0)
     
-    private let selectionBackground: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColors.vanilla
-        view.layer.cornerRadius = 18
-        view.layer.masksToBounds = false
-        view.layer.shadowColor = AppColors.customBlue.cgColor
-        view.layer.shadowOpacity = 0.25
-        view.layer.shadowOffset = CGSize(width: 0, height: 6)
-        view.layer.shadowRadius = 12
-        view.isUserInteractionEnabled = false
-        return view
-    }()
-    
     // MARK: - viewDidLoad
     
     override func viewDidLoad() {
@@ -135,30 +122,55 @@ class MainViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
                 section.interGroupSpacing = 5
-                section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 25, leading: 16, bottom: -35, trailing: 16)
                 
                 return section
             case .products:
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.5),
-                    heightDimension: .estimated(250)
+                    widthDimension: .fractionalWidth(0.48),
+                    heightDimension: .absolute(230)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 0)
+                
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(250)
+                    widthDimension: .absolute(410),
+                    heightDimension: .absolute(230)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item, item])
-
+                
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .none
                 section.interGroupSpacing = 15
                 return section
                 
             case .specials:
-                return nil
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(0.9)
+                )
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalWidth(0.9)
+                )
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    subitems: [item]
+                )
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.interGroupSpacing = 20
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+                
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(54))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                
+                section.boundarySupplementaryItems = [sectionHeader]
+                
+                return section
                 
             }
             
@@ -170,6 +182,10 @@ class MainViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
+        collectionView.register(SectionHeaderReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderReusableView.identifier)
+        collectionView.register(WebCollectionViewCell.self, forCellWithReuseIdentifier: WebCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
@@ -182,7 +198,8 @@ class MainViewController: UIViewController {
         
         ultimateCollectionView.snp.makeConstraints { make in
             make.top.equalTo(actualAddressPick.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview().inset(10)
             make.bottom.equalToSuperview()
         }
         

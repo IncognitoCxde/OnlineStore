@@ -16,7 +16,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .products:
             return viewModel.products.count
         case .specials:
-            return 0
+            return 1
         }
     }
     
@@ -35,7 +35,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configure(with: product)
             return cell
         case .specials:
-            return UICollectionViewCell()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebCollectionViewCell.identifier, for: indexPath) as! WebCollectionViewCell
+            return cell
         }
     }
     
@@ -50,6 +51,22 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         selectedIndexPath = indexPath
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: SectionHeaderReusableView.identifier,
+            for: indexPath
+        ) as! SectionHeaderReusableView
+        
+        if indexPath.section == 2 {
+            header.configure(title: "Special for you" ,section: indexPath.section)
+        }
+         else {
+            header.configure(title: "" ,section: indexPath.section)
+        }
+        return header
     }
 }
 
