@@ -80,8 +80,8 @@ final class OnboardingContentViewController: UIViewController {
         titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 3
         
-        descriptionLabel.font = AppFont.black_24pt(size: 18)
-        descriptionLabel.textColor = AppColors.grey
+        descriptionLabel.font = AppFont.medium_18pt(size: 19)
+        descriptionLabel.textColor = AppColors.mediumGrey
         descriptionLabel.textAlignment = .left
         descriptionLabel.numberOfLines = 1
         
@@ -114,12 +114,13 @@ final class OnboardingContentViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.top.equalTo(imageView.snp.bottom).inset(10)
+            make.leading.equalToSuperview().inset(24)
+            make.trailing.equalToSuperview().inset(15)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
             make.leading.trailing.equalToSuperview().inset(24)
         }
         

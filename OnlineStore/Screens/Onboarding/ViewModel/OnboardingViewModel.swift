@@ -16,12 +16,12 @@ final class OnboardingViewModel {
         ),
         OnboardingSlide(
             title: "Shop from \neverywhere",
-            description: "Clothes, gadgets and more",
+            description: "clothes, gadgets and more",
             image: UIImage(named: "Onboarding2")!
         ),
         OnboardingSlide(
             title: "Get the best \nsales offers",
-            description: "Up to 20% on every item",
+            description: "up to 20% on every item",
             image: UIImage(named: "Onboarding3")!
         )
     ]
