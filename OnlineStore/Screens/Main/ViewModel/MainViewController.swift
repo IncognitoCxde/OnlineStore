@@ -83,6 +83,7 @@ class MainViewController: UIViewController {
         }
         
         actualAddressPick.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
+        cartButton.addTarget(self, action: #selector(showCart), for: .touchUpInside)
     }
     
     // MARK: - Data Centre
@@ -209,6 +210,14 @@ class MainViewController: UIViewController {
     
     @objc func selectLocation() {
         print("showing different locations..")
+    }
+    
+    @objc func showCart() {
+        print("working..")
+        let cartVC = CartViewController()
+
+        cartVC.modalPresentationStyle = .fullScreen
+        present(cartVC, animated: true)
     }
 
 }
