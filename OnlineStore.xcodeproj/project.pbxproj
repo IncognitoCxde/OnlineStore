@@ -7,8 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5720267F2E9618400079250D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5720267E2E9618400079250D /* SnapKit */; };
+		F493724B2E986801008F7606 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = F493724A2E986801008F7606 /* DesignSystem */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F493724D2E986840008F7606 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		572006952E87DD3C0079250D /* OnlineStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5720267F2E9618400079250D /* SnapKit in Frameworks */,
+				F493724B2E986801008F7606 /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				572006972E87DD3C0079250D /* OnlineStore */,
+				F49372492E9867FC008F7606 /* Frameworks */,
 				572006962E87DD3C0079250D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +77,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F49372492E9867FC008F7606 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -73,6 +94,7 @@
 				572006912E87DD3C0079250D /* Sources */,
 				572006922E87DD3C0079250D /* Frameworks */,
 				572006932E87DD3C0079250D /* Resources */,
+				F493724D2E986840008F7606 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -83,7 +105,7 @@
 			);
 			name = OnlineStore;
 			packageProductDependencies = (
-				5720267E2E9618400079250D /* SnapKit */,
+				F493724A2E986801008F7606 /* DesignSystem */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
@@ -114,8 +136,7 @@
 			mainGroup = 5720068C2E87DD3C0079250D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */,
-				5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				F49372432E98653B008F7606 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -354,29 +375,22 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../DesignSystem;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
-		5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		F49372432E98653B008F7606 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			repositoryURL = "https://github.com/IncognitoCxde/DesignSystem-OnlineStore.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5720267E2E9618400079250D /* SnapKit */ = {
+		F493724A2E986801008F7606 /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
+			package = F49372432E98653B008F7606 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */;
+			productName = DesignSystem;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

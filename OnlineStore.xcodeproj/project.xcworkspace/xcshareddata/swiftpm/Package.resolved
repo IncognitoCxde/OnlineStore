@@ -1,6 +1,15 @@
 {
-  "originHash" : "4cdad746817ac9ed37e44dbe90a2ff25fc018954899b7d513e41a4bfc70f065a",
+  "originHash" : "f12e6a89664f7d9d3756fccc18865edc474803f3a9b1aa913e56da1e85ead263",
   "pins" : [
+    {
+      "identity" : "designsystem-onlinestore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IncognitoCxde/DesignSystem-OnlineStore.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "5637b51e46c2780b224032f792b67f4202673934"
+      }
+    },
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",

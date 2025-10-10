@@ -1,6 +1,5 @@
 import UIKit
 import DesignSystem
-import SnapKit
 
 extension UIButton {
     static func makeStyledButton(
