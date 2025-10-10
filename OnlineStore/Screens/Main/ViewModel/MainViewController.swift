@@ -11,6 +11,7 @@ class MainViewController: UIViewController {
     // MARK: - Variables
     
     let viewModel = MainViewModel()
+    let networkingManager: HomeNetworkingProtocol = HomeNetworkingManager()
     
     let cartButton: UIButton = {
         let cart = UIButton()
@@ -47,6 +48,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = AppColors.lightGrey
         tabBarController?.tabBar.dropShadow()
         setUpFunctions()
+
     }
     
     func setUpFunctions() {
@@ -54,6 +56,7 @@ class MainViewController: UIViewController {
         configureConstraints()
         configureCollectionConstraints()
         bindViewModel()
+        
     }
     
     // MARK: - AddSubViews
@@ -94,7 +97,9 @@ class MainViewController: UIViewController {
                 self?.ultimateCollectionView.reloadData()
             }
         }
-        viewModel.loadMockData()
+        viewModel.fetchData {
+            self.ultimateCollectionView.reloadData()
+        }
     }
     
     // MARK: - Compositional Layout
@@ -179,7 +184,7 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - CollectionView
-    private lazy var ultimateCollectionView: UICollectionView = {
+    lazy var ultimateCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)

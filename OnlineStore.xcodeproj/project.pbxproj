@@ -12,11 +12,39 @@
 		572012D02E8EC9CB0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
 		572012D32E8EC9F60079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012D22E8EC9F60079250D /* DesignSystem */; };
 		57201C522E9287D80079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 57201C512E9287D80079250D /* DesignSystem */; };
-		5720267F2E9618400079250D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5720267E2E9618400079250D /* SnapKit */; };
+		576FF8062E979473003FD208 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 576FF8002E979473003FD208 /* Networking.framework */; };
+		576FF8072E979473003FD208 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 576FF8002E979473003FD208 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57BAB1AA2E98E34F00811494 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 57BAB1A92E98E34F00811494 /* SnapKit */; };
+		57BAB1AD2E98E3CF00811494 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 57BAB1AC2E98E3CF00811494 /* DesignSystem */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		576FF8042E979473003FD208 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5720068D2E87DD3C0079250D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 576FF7FF2E979473003FD208;
+			remoteInfo = Networking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		576FF80B2E979473003FD208 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				576FF8072E979473003FD208 /* Networking.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		572006952E87DD3C0079250D /* OnlineStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		576FF8002E979473003FD208 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -38,6 +66,11 @@
 			path = OnlineStore;
 			sourceTree = "<group>";
 		};
+		576FF8012E979473003FD208 /* Networking */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,9 +81,18 @@
 				572012D32E8EC9F60079250D /* DesignSystem in Frameworks */,
 				572012CE2E8EC21C0079250D /* DesignSystem in Frameworks */,
 				57201C522E9287D80079250D /* DesignSystem in Frameworks */,
-				5720267F2E9618400079250D /* SnapKit in Frameworks */,
+				57BAB1AD2E98E3CF00811494 /* DesignSystem in Frameworks */,
+				57BAB1AA2E98E34F00811494 /* SnapKit in Frameworks */,
 				572012CB2E8EC1ED0079250D /* DesignSystem in Frameworks */,
 				572012D02E8EC9CB0079250D /* DesignSystem in Frameworks */,
+				576FF8062E979473003FD208 /* Networking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		576FF7FD2E979473003FD208 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				572006972E87DD3C0079250D /* OnlineStore */,
+				576FF8012E979473003FD208 /* Networking */,
 				572006962E87DD3C0079250D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,11 +112,22 @@
 			isa = PBXGroup;
 			children = (
 				572006952E87DD3C0079250D /* OnlineStore.app */,
+				576FF8002E979473003FD208 /* Networking.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		576FF7FB2E979473003FD208 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		572006942E87DD3C0079250D /* OnlineStore */ = {
@@ -83,10 +137,12 @@
 				572006912E87DD3C0079250D /* Sources */,
 				572006922E87DD3C0079250D /* Frameworks */,
 				572006932E87DD3C0079250D /* Resources */,
+				576FF80B2E979473003FD208 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				576FF8052E979473003FD208 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				572006972E87DD3C0079250D /* OnlineStore */,
@@ -98,11 +154,35 @@
 				572012CF2E8EC9CB0079250D /* DesignSystem */,
 				572012D22E8EC9F60079250D /* DesignSystem */,
 				57201C512E9287D80079250D /* DesignSystem */,
-				5720267E2E9618400079250D /* SnapKit */,
+				57BAB1A92E98E34F00811494 /* SnapKit */,
+				57BAB1AC2E98E3CF00811494 /* DesignSystem */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
 			productType = "com.apple.product-type.application";
+		};
+		576FF7FF2E979473003FD208 /* Networking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 576FF8082E979473003FD208 /* Build configuration list for PBXNativeTarget "Networking" */;
+			buildPhases = (
+				576FF7FB2E979473003FD208 /* Headers */,
+				576FF7FC2E979473003FD208 /* Sources */,
+				576FF7FD2E979473003FD208 /* Frameworks */,
+				576FF7FE2E979473003FD208 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				576FF8012E979473003FD208 /* Networking */,
+			);
+			name = Networking;
+			packageProductDependencies = (
+			);
+			productName = Networking;
+			productReference = 576FF8002E979473003FD208 /* Networking.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -117,6 +197,9 @@
 					572006942E87DD3C0079250D = {
 						CreatedOnToolsVersion = 16.4;
 					};
+					576FF7FF2E979473003FD208 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 				};
 			};
 			buildConfigurationList = 572006902E87DD3C0079250D /* Build configuration list for PBXProject "OnlineStore" */;
@@ -129,8 +212,8 @@
 			mainGroup = 5720068C2E87DD3C0079250D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */,
-				5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				57BAB1A82E98E34F00811494 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				57BAB1AB2E98E3CF00811494 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -138,12 +221,20 @@
 			projectRoot = "";
 			targets = (
 				572006942E87DD3C0079250D /* OnlineStore */,
+				576FF7FF2E979473003FD208 /* Networking */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		572006932E87DD3C0079250D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		576FF7FE2E979473003FD208 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -160,7 +251,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		576FF7FC2E979473003FD208 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		576FF8052E979473003FD208 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 576FF7FF2E979473003FD208 /* Networking */;
+			targetProxy = 576FF8042E979473003FD208 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		572006A92E87DD3E0079250D /* Debug */ = {
@@ -175,8 +281,8 @@
 				INFOPLIST_FILE = OnlineStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -207,8 +313,8 @@
 				INFOPLIST_FILE = OnlineStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -346,6 +452,84 @@
 			};
 			name = Release;
 		};
+		576FF8092E979473003FD208 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U5T562CXKJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = BManuchehri.Networking;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		576FF80A2E979473003FD208 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U5T562CXKJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = BManuchehri.Networking;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -367,22 +551,32 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		576FF8082E979473003FD208 /* Build configuration list for PBXNativeTarget "Networking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				576FF8092E979473003FD208 /* Debug */,
+				576FF80A2E979473003FD208 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../DesignSystem;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
-		5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		57BAB1A82E98E34F00811494 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.7.1;
+			};
+		};
+		57BAB1AB2E98E3CF00811494 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IncognitoCxde/DesignSystem-OnlineStore";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -408,10 +602,15 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;
 		};
-		5720267E2E9618400079250D /* SnapKit */ = {
+		57BAB1A92E98E34F00811494 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 57BAB1A82E98E34F00811494 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		57BAB1AC2E98E3CF00811494 /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BAB1AB2E98E3CF00811494 /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */;
+			productName = DesignSystem;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

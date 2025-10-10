@@ -1,13 +1,17 @@
-// MARK: - UICollectionView DataSource and Delegate
 
 import UIKit
 import DesignSystem
 
+// MARK: - UICollectionView DataSource and Delegate
+
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    // MARK: - Number of Sections
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return SectionType.allCases.count
     }
     
+    // MARK: - NumberOfItemsInSection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let sectionType = SectionType(rawValue: section) else { return 0 }
         switch sectionType {
@@ -19,6 +23,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return 1
         }
     }
+    
+    // MARK: - CellForItemAt
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let sectionType = SectionType(rawValue: indexPath.section) else { fatalError() }
@@ -40,18 +46,38 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
     
+    // MARK: - DidSelectItemAt
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        guard let sectionType = SectionType(rawValue: indexPath.section),
+              sectionType == .categories else { return }
+
+        // UI
         if let oldCell = collectionView.cellForItem(at: selectedIndexPath) as? CategoriesCollectionViewCell {
             oldCell.updateSelection(selected: false, animated: true)
         }
-        
         if let newCell = collectionView.cellForItem(at: indexPath) as? CategoriesCollectionViewCell {
             newCell.updateSelection(selected: true, animated: true)
         }
-        
+
         selectedIndexPath = indexPath
+        
+        let apiCategory = viewModel.categories[indexPath.item]
+        let categoryName = apiCategory.name.lowercased()
+
+        if let categoryEnum = Categories(rawValue: categoryName) {
+            viewModel.loadProducts(for: categoryEnum) { [weak self] in
+                DispatchQueue.main.async {
+                    self?.ultimateCollectionView.reloadSections(IndexSet(integer: SectionType.products.rawValue))
+                }
+            }
+        } else {
+            print("⚠️ Unknown category from API:", categoryName)
+        }
+
     }
+    
+    // MARK: - ViewForSupplementaryElementOfKind
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(
