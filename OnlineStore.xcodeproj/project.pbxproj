@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 576855CE2E9976C10031BFFA /* DesignSystem */; };
+		57739EB92E9AA31300B70C80 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57739EB32E9AA31300B70C80 /* Networking.framework */; };
+		57739EBA2E9AA31300B70C80 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57739EB32E9AA31300B70C80 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57C050F72E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CA2E8EC1ED0079250D /* DesignSystem */; };
 		57C050F82E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CD2E8EC21C0079250D /* DesignSystem */; };
 		57C050F92E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
@@ -15,8 +17,33 @@
 		57C050FB2E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 57201C512E9287D80079250D /* DesignSystem */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		57739EB72E9AA31300B70C80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5720068D2E87DD3C0079250D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57739EB22E9AA31300B70C80;
+			remoteInfo = Networking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		57739EBB2E9AA31300B70C80 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57739EBA2E9AA31300B70C80 /* Networking.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		572006952E87DD3C0079250D /* OnlineStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnlineStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57739EB32E9AA31300B70C80 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -38,6 +65,11 @@
 			path = OnlineStore;
 			sourceTree = "<group>";
 		};
+		57739EB42E9AA31300B70C80 /* Networking */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +83,14 @@
 				57C050F82E9A88C100107327 /* DesignSystem in Frameworks */,
 				57C050F72E9A88C100107327 /* DesignSystem in Frameworks */,
 				576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */,
+				57739EB92E9AA31300B70C80 /* Networking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57739EB02E9AA31300B70C80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				572006972E87DD3C0079250D /* OnlineStore */,
+				57739EB42E9AA31300B70C80 /* Networking */,
 				572006962E87DD3C0079250D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,11 +110,22 @@
 			isa = PBXGroup;
 			children = (
 				572006952E87DD3C0079250D /* OnlineStore.app */,
+				57739EB32E9AA31300B70C80 /* Networking.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		57739EAE2E9AA31300B70C80 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		572006942E87DD3C0079250D /* OnlineStore */ = {
@@ -83,10 +135,12 @@
 				572006912E87DD3C0079250D /* Sources */,
 				572006922E87DD3C0079250D /* Frameworks */,
 				572006932E87DD3C0079250D /* Resources */,
+				57739EBB2E9AA31300B70C80 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				57739EB82E9AA31300B70C80 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				572006972E87DD3C0079250D /* OnlineStore */,
@@ -104,6 +158,29 @@
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
 			productType = "com.apple.product-type.application";
 		};
+		57739EB22E9AA31300B70C80 /* Networking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57739EBE2E9AA31300B70C80 /* Build configuration list for PBXNativeTarget "Networking" */;
+			buildPhases = (
+				57739EAE2E9AA31300B70C80 /* Headers */,
+				57739EAF2E9AA31300B70C80 /* Sources */,
+				57739EB02E9AA31300B70C80 /* Frameworks */,
+				57739EB12E9AA31300B70C80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				57739EB42E9AA31300B70C80 /* Networking */,
+			);
+			name = Networking;
+			packageProductDependencies = (
+			);
+			productName = Networking;
+			productReference = 57739EB32E9AA31300B70C80 /* Networking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -115,6 +192,9 @@
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					572006942E87DD3C0079250D = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					57739EB22E9AA31300B70C80 = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -137,12 +217,20 @@
 			projectRoot = "";
 			targets = (
 				572006942E87DD3C0079250D /* OnlineStore */,
+				57739EB22E9AA31300B70C80 /* Networking */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		572006932E87DD3C0079250D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57739EB12E9AA31300B70C80 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -159,7 +247,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57739EAF2E9AA31300B70C80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		57739EB82E9AA31300B70C80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57739EB22E9AA31300B70C80 /* Networking */;
+			targetProxy = 57739EB72E9AA31300B70C80 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		572006A92E87DD3E0079250D /* Debug */ = {
@@ -345,6 +448,76 @@
 			};
 			name = Release;
 		};
+		57739EBC2E9AA31300B70C80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U5T562CXKJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = BManuchehri.Networking;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		57739EBD2E9AA31300B70C80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U5T562CXKJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = BManuchehri.Networking;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -362,6 +535,15 @@
 			buildConfigurations = (
 				572006A92E87DD3E0079250D /* Debug */,
 				572006AA2E87DD3E0079250D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57739EBE2E9AA31300B70C80 /* Build configuration list for PBXNativeTarget "Networking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57739EBC2E9AA31300B70C80 /* Debug */,
+				57739EBD2E9AA31300B70C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
