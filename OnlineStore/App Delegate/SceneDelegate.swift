@@ -14,12 +14,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        let window = UIWindow(windowScene: windowScene)
-        onboardingCoordinator = OnboardingCoordinator(window: window)
-        onboardingCoordinator?.start()
+        // временно сбрасываем
+        //UserDefaults.standard.set(false, forKey: "hasSeenOnboarding")
         
+        let window = UIWindow(windowScene: windowScene)
         self.window = window
+
+        let hasSeenOnboarding = UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
+
+        if hasSeenOnboarding {
+            // Показываем основной интерфейс
+            let mainTabBar = TabBarController()
+            window.rootViewController = mainTabBar
+        } else {
+            // Показываем онбординг
+            onboardingCoordinator = OnboardingCoordinator(window: window)
+            onboardingCoordinator?.start()
+        }
+
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

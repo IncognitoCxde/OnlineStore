@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051633FC2E97F7D8002D5F62 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 051633FB2E97F7D8002D5F62 /* DesignSystem */; };
 		572012CB2E8EC1ED0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CA2E8EC1ED0079250D /* DesignSystem */; };
 		572012CE2E8EC21C0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CD2E8EC21C0079250D /* DesignSystem */; };
 		572012D02E8EC9CB0079250D /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
@@ -47,6 +48,7 @@
 			files = (
 				572012D32E8EC9F60079250D /* DesignSystem in Frameworks */,
 				572012CE2E8EC21C0079250D /* DesignSystem in Frameworks */,
+				051633FC2E97F7D8002D5F62 /* DesignSystem in Frameworks */,
 				57201C522E9287D80079250D /* DesignSystem in Frameworks */,
 				5720267F2E9618400079250D /* SnapKit in Frameworks */,
 				572012CB2E8EC1ED0079250D /* DesignSystem in Frameworks */,
@@ -99,6 +101,7 @@
 				572012D22E8EC9F60079250D /* DesignSystem */,
 				57201C512E9287D80079250D /* DesignSystem */,
 				5720267E2E9618400079250D /* SnapKit */,
+				051633FB2E97F7D8002D5F62 /* DesignSystem */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
@@ -112,7 +115,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					572006942E87DD3C0079250D = {
 						CreatedOnToolsVersion = 16.4;
@@ -129,8 +132,8 @@
 			mainGroup = 5720068C2E87DD3C0079250D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */,
 				5720267D2E9618400079250D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				051633FA2E97F7D8002D5F62 /* XCLocalSwiftPackageReference "DesignSystem" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -170,7 +173,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U5T562CXKJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnlineStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -202,7 +204,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U5T562CXKJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnlineStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -262,6 +263,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = U5T562CXKJ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -285,6 +287,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -325,6 +328,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = U5T562CXKJ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -341,6 +345,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -370,9 +375,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		57201C502E9287D80079250D /* XCLocalSwiftPackageReference "../DesignSystem" */ = {
+		051633FA2E97F7D8002D5F62 /* XCLocalSwiftPackageReference "DesignSystem" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../DesignSystem;
+			relativePath = DesignSystem;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -388,6 +393,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		051633FB2E97F7D8002D5F62 /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
 		572012CA2E8EC1ED0079250D /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;

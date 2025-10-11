@@ -1,10 +1,3 @@
-//
-//  OnboardingCoordinator.swift
-//  OnlineStore
-//
-//  Created by Aziza Azizova on 03/10/25.
-//
-
 import UIKit
 
 final class OnboardingCoordinator {
@@ -21,6 +14,8 @@ final class OnboardingCoordinator {
     func start() {
         let onboardingVC = OnboardingViewController()
         onboardingVC.onFinish = { [weak self] in
+            // Сохраняем флаг, что онбординг завершён
+            UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
             self?.showMain()
         }
         navigationController.setViewControllers([onboardingVC], animated: false)
@@ -29,7 +24,6 @@ final class OnboardingCoordinator {
     }
     
     private func showMain() {
-        //открываем таббар
         let mainTabBar = TabBarController()
         navigationController.setViewControllers([mainTabBar], animated: true)
     }
