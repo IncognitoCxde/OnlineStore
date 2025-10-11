@@ -94,9 +94,9 @@ class ProfileViewController: UIViewController {
             self?.present(navVC, animated: true)
         }
 
-        viewModel.onLogout = { [weak self] in
-            // логика выхода
-        }
+//        viewModel.onLogout = { [weak self] in
+//            // логика выхода
+//        }
     }
 
     @objc private func didTapChangeType() {

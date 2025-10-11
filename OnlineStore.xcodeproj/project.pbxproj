@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 576855CE2E9976C10031BFFA /* DesignSystem */; };
+		57C050F72E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CA2E8EC1ED0079250D /* DesignSystem */; };
+		57C050F82E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CD2E8EC21C0079250D /* DesignSystem */; };
+		57C050F92E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
+		57C050FA2E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012D22E8EC9F60079250D /* DesignSystem */; };
+		57C050FB2E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 57201C512E9287D80079250D /* DesignSystem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57C050FB2E9A88C100107327 /* DesignSystem in Frameworks */,
+				57C050FA2E9A88C100107327 /* DesignSystem in Frameworks */,
+				57C050F92E9A88C100107327 /* DesignSystem in Frameworks */,
+				57C050F82E9A88C100107327 /* DesignSystem in Frameworks */,
+				57C050F72E9A88C100107327 /* DesignSystem in Frameworks */,
 				576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
