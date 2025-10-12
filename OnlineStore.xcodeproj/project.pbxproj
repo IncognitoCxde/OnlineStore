@@ -47,7 +47,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		572006A72E87DD3E0079250D /* Exceptions for "OnlineStore" folder in "OnlineStore" target */ = {
+		05E2F7832E9BF8BF00537C0D /* Exceptions for "OnlineStore" folder in "OnlineStore" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -60,7 +60,7 @@
 		572006972E87DD3C0079250D /* OnlineStore */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				572006A72E87DD3E0079250D /* Exceptions for "OnlineStore" folder in "OnlineStore" target */,
+				05E2F7832E9BF8BF00537C0D /* Exceptions for "OnlineStore" folder in "OnlineStore" target */,
 			);
 			path = OnlineStore;
 			sourceTree = "<group>";
