@@ -17,9 +17,7 @@ final class HomeNetworkingManager: HomeNetworkingProtocol {
         guard let url = manager.createURL(for: .productsByCategorySlug(slug: slug)) else {
             completion(.failure(.invalidURL))
             return
-        }
-        print("Fetching products by category slug URL:", url.absoluteString)
-        
+        }        
         manager.makeTask(for: url, completion: completion)
     }
     

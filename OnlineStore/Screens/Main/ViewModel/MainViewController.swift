@@ -54,6 +54,7 @@ class MainViewController: UIViewController {
     func setUpFunctions() {
         addSubViews()
         configureConstraints()
+        configureTargets()
         configureCollectionConstraints()
         bindViewModel()
         
@@ -65,6 +66,11 @@ class MainViewController: UIViewController {
         view.addSubview(cartButton)
         view.addSubview(deliveryAddressLabel)
         view.addSubview(actualAddressPick)
+    }
+    
+    func configureTargets() {
+        actualAddressPick.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
+        cartButton.addTarget(self, action: #selector(showCart), for: .touchUpInside)
     }
     
     // MARK: - Constraints
@@ -84,9 +90,7 @@ class MainViewController: UIViewController {
             make.top.equalTo(deliveryAddressLabel.snp.bottom)
             make.leading.equalTo(deliveryAddressLabel.snp.leading)
         }
-        
-        actualAddressPick.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
-        cartButton.addTarget(self, action: #selector(showCart), for: .touchUpInside)
+
     }
     
     // MARK: - Data Centre
@@ -195,6 +199,9 @@ class MainViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        collectionView.bouncesHorizontally = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
     }()
@@ -215,14 +222,13 @@ class MainViewController: UIViewController {
     
     @objc func selectLocation() {
         print("showing different locations..")
+        
+        let locationsVC = LocationsSelectVC()
+        self.present(locationsVC, animated: true)
     }
     
     @objc func showCart() {
         print("working..")
-        let cartVC = CartViewController()
-
-        cartVC.modalPresentationStyle = .fullScreen
-        present(cartVC, animated: true)
     }
 
 }

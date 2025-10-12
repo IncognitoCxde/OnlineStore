@@ -30,7 +30,7 @@ class TermsViewController: UIViewController {
         textView.text = """
         Welcome to OnlineStore. By using our app or making a purchase, you agree to these terms.
             •    Orders: All orders are subject to availability and confirmation.
-            •    Payments: We accept online payments by bank cards. Prices are shown in TJS.
+            •    Payments: We accept online payments by bank cards. Prices are shown in TJS/USD.
             •    Shipping: Delivery times may vary depending on location.
             •    Returns: You can return items within 14 days in original condition.
             •    Privacy: We respect your privacy. Your personal data is used only to process orders.

@@ -20,7 +20,7 @@ class ChangeTypeViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "Change account type"
-        titleLabel.font = AppFont.bold_24pt(size: 18)
+        titleLabel.font = AppFont.semiBold_18pt(size: 18)
         titleLabel.textAlignment = .center
 
         let clientButton = UIButton.makeIconButton(text: "Client", icon: AppIcons.client)

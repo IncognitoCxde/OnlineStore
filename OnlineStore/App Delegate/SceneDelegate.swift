@@ -14,8 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        // временно сбрасываем
-        //UserDefaults.standard.set(false, forKey: "hasSeenOnboarding")
         
         let window = UIWindow(windowScene: windowScene)
         self.window = window
@@ -23,11 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let hasSeenOnboarding = UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
 
         if hasSeenOnboarding {
-            // Показываем основной интерфейс
             let mainTabBar = TabBarController()
             window.rootViewController = mainTabBar
         } else {
-            // Показываем онбординг
             onboardingCoordinator = OnboardingCoordinator(window: window)
             onboardingCoordinator?.start()
         }

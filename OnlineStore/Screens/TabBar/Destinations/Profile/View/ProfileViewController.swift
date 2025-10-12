@@ -127,7 +127,7 @@ private func makeCustomButton(text: String, iconName: String) -> UIButton {
     let label = UILabel()
     label.text = text
     label.textColor = .white
-    label.font = AppFont.black_24pt(size: 16)
+    label.font = AppFont.semiBold_18pt(size: 16)
 
     let icon = UIImageView(image: UIImage(systemName: iconName))
     icon.tintColor = .white

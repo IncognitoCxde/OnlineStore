@@ -20,7 +20,7 @@ class ChangePictureViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = "Change your picture"
-        titleLabel.font = AppFont.black_24pt(size: 18)
+        titleLabel.font = AppFont.semiBold_18pt(size: 18)
         titleLabel.textAlignment = .center
 
         let takePhotoButton = UIButton.makeIconButton(text: "Take a photo", icon: AppIcons.camera)

@@ -72,7 +72,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
             }
         } else {
-            print("⚠️ Unknown category from API:", categoryName)
+            print("Unknown category from API:", categoryName)
         }
 
     }
