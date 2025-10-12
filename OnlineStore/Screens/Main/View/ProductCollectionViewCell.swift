@@ -60,7 +60,14 @@ public class ProductCollectionViewCell: UICollectionViewCell {
         addToCartButton.setTitle("Add to cart", for: .normal)
         addToCartButton.titleLabel?.font = AppFont.regular18pt(size: 14)
         addToCartButton.setTitleColor(.white, for: .normal)
-        addToCartButton.backgroundColor = AppColors.customBlue
+
+        /// feature flag
+        if FeatureFlagsManager.shared.isEnabled(.newDesign) {
+            addToCartButton.backgroundColor = .systemGreen
+        } else {
+            addToCartButton.backgroundColor = AppColors.customBlue
+        }
+
         addToCartButton.layer.cornerRadius = 8
         addToCartButton.addTarget(self, action: #selector(handleAddToCart), for: .touchUpInside)
         

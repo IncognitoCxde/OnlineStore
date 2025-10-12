@@ -20,13 +20,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let hasSeenOnboarding = UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
 
-        if hasSeenOnboarding {
-            let mainTabBar = TabBarController()
-            window.rootViewController = mainTabBar
-        } else {
+        /// feature flag
+//        FeatureFlagsManager.shared.set(.newDesign, enabled: true)
+//        FeatureFlagsManager.shared.toggle(.newDesign)
+
+//        if hasSeenOnboarding {
+//            let mainTabBar = TabBarController()
+//            window.rootViewController = mainTabBar
+//        } else {
             onboardingCoordinator = OnboardingCoordinator(window: window)
             onboardingCoordinator?.start()
-        }
+//        }
 
         window.makeKeyAndVisible()
     }

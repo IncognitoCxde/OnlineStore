@@ -3,7 +3,10 @@ import SnapKit
 import DesignSystem
 
 final class OnboardingContentViewController: UIViewController {
-    
+
+    private var tapCount = 0
+    private var tapTimer: Timer?
+
     let slide: OnboardingSlide
     var isLastSlide: Bool = false
     
@@ -40,6 +43,7 @@ final class OnboardingContentViewController: UIViewController {
         detailsUI()
         setUpConstraints() 
         configure(with: slide)
+        addSecretGesture()
     }
     
     override func viewDidLayoutSubviews() {
@@ -174,4 +178,34 @@ final class OnboardingContentViewController: UIViewController {
             onNextTapped?()
         }
     }
+}
+
+extension OnboardingContentViewController {
+    private func addSecretGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(secretTapped))
+        tapGesture.numberOfTapsRequired = 1
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func secretTapped() {
+        tapCount += 1
+        tapTimer?.invalidate()
+
+        tapTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
+            self.tapCount = 0
+        }
+
+        if tapCount >= 5 {
+            tapCount = 0
+            presentDevMode()
+        }
+    }
+
+    private func presentDevMode() {
+        let devVC = DevModeViewController()
+        devVC.modalPresentationStyle = .formSheet
+        present(devVC, animated: true)
+    }
+
 }
