@@ -18,7 +18,7 @@ class WishlistCell: UICollectionViewCell {
     required init?(coder: NSCoder) { fatalError() }
 
     private func setupUI() {
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = AppColors.lightGrey
         contentView.layer.cornerRadius = 12
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOpacity = 0.1
