@@ -221,14 +221,14 @@ class MainViewController: UIViewController {
     // MARK: - Handle Location Button
     
     @objc func selectLocation() {
-        print("showing different locations..")
-        
-        let locationsVC = LocationsSelectVC()
-        self.present(locationsVC, animated: true)
+        print("drop down different locations..")
     }
     
     @objc func showCart() {
         print("working..")
+        let cartVC = CartViewController()
+        cartVC.modalPresentationStyle = .fullScreen
+        present(cartVC, animated: true)
     }
 
 }
