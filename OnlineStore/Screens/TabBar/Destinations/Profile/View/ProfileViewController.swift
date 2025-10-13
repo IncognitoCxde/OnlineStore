@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
         buttonStack.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(24)
             $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(160)
+//            $0.height.equalTo(160)
         }
 
         // Actions
