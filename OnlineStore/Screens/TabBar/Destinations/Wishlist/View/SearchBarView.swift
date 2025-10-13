@@ -15,7 +15,7 @@ final class SearchBarView: UIView {
 
     private let textField: UITextField = {
         let field = UITextField()
-        field.placeholder = "Search favorites"
+        field.placeholder = "Search here..."
         field.font = AppFont.regular18pt(size: 17)
         field.clearButtonMode = .whileEditing
         field.borderStyle = .none
@@ -39,7 +39,7 @@ final class SearchBarView: UIView {
     private func setupUI() {
         backgroundColor = .clear
         layer.borderWidth = 1
-        layer.borderColor = AppColors.grey.cgColor
+        layer.borderColor = AppColors.mediumGrey.cgColor
         layer.cornerRadius = 12
         layer.masksToBounds = true
 
