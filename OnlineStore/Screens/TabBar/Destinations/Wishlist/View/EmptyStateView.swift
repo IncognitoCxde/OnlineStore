@@ -9,7 +9,7 @@ class EmptyStateView: UIView {
     private let actionButton = UIButton()
     var onAction: (() -> Void)?
 
-    init(message: String, icon: UIImage = AppIcons.heart, buttonTitle: String = "Go shopping") {
+    init(message: String, icon: UIImage = AppIcons.heartActive, buttonTitle: String = "Go shopping") {
         super.init(frame: .zero)
         setupUI(message: message, icon: icon, buttonTitle: buttonTitle)
     }
@@ -25,7 +25,7 @@ class EmptyStateView: UIView {
         iconView.snp.makeConstraints { $0.height.equalTo(64) }
 
         messageLabel.text = message
-        messageLabel.font = AppFont.regular18pt(size: 16)
+        messageLabel.font = AppFont.regular18pt(size: 18)
         messageLabel.textColor = AppColors.arsenicDark
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 2

@@ -37,6 +37,11 @@ class WishlistViewController: UIViewController {
             self?.collectionView.reloadData()
         }
 
+        // Добавлено действие для кнопки Go shopping
+        emptyStateView.onAction = { [weak self] in
+            self?.tabBarController?.selectedIndex = 0
+        }
+
         view.addSubview(searchBarView)
         view.addSubview(collectionView)
         view.addSubview(emptyStateView)
