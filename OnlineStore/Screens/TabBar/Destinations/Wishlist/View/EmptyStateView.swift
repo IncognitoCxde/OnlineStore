@@ -17,14 +17,16 @@ class EmptyStateView: UIView {
     required init?(coder: NSCoder) { fatalError() }
 
     private func setupUI(message: String, icon: UIImage, buttonTitle: String) {
+        backgroundColor = AppColors.lightGrey
+        
         iconView.image = icon
         iconView.contentMode = .scaleAspectFit
-        iconView.tintColor = AppColors.arsenicDark
+        iconView.tintColor = AppColors.customBlue
         iconView.snp.makeConstraints { $0.height.equalTo(64) }
 
         messageLabel.text = message
         messageLabel.font = AppFont.regular18pt(size: 16)
-        messageLabel.textColor = .gray
+        messageLabel.textColor = AppColors.arsenicDark
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 2
 

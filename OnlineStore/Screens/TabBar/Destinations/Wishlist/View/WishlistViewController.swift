@@ -5,8 +5,10 @@ import DesignSystem
 class WishlistViewController: UIViewController {
 
     private let viewModel = WishlistViewModel()
-    private let searchBar = UISearchBar()
+
+    private let searchBarView = SearchBarView()
     private let emptyStateView = EmptyStateView(message: "Your wishlist is empty")
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 160, height: 240)
@@ -22,41 +24,33 @@ class WishlistViewController: UIViewController {
         viewModel.loadFavorites()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchBarView.focus()
+    }
+
     private func setupUI() {
         view.backgroundColor = AppColors.lightGrey
 
-        searchBar.placeholder = "Search favorites"
-        searchBar.delegate = self
-        searchBar.searchBarStyle = .minimal
-        searchBar.backgroundColor = .clear
-
-        emptyStateView.isHidden = true
-        emptyStateView.onAction = { [weak self] in
-            guard let tabBarController = self?.tabBarController else {
-                self?.navigationController?.popToRootViewController(animated: true)
-                return
-            }
-            tabBarController.selectedIndex = 0 // переключаемся на первую вкладку (главная)
+        searchBarView.onTextChanged = { [weak self] text in
+            self?.viewModel.search(text)
+            self?.collectionView.reloadData()
         }
 
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(WishlistCell.self, forCellWithReuseIdentifier: "WishlistCell")
-        collectionView.backgroundColor = .clear
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
-
-        view.addSubview(searchBar)
+        view.addSubview(searchBarView)
         view.addSubview(collectionView)
         view.addSubview(emptyStateView)
 
-        searchBar.snp.makeConstraints {
+        view.bringSubviewToFront(searchBarView)
+
+        searchBarView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(12)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(44)
         }
 
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(12)
+            $0.top.equalTo(searchBarView.snp.bottom).offset(12)
             $0.leading.trailing.bottom.equalToSuperview().inset(16)
         }
 
@@ -70,14 +64,6 @@ class WishlistViewController: UIViewController {
             self?.collectionView.reloadData()
             self?.emptyStateView.isHidden = !(self?.viewModel.filteredItems.isEmpty ?? true)
         }
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension WishlistViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.search(searchText)
     }
 }
 
