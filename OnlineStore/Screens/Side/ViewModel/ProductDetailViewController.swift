@@ -61,6 +61,21 @@ class ProductDetailViewController: UIViewController {
     
     let scrollView = UIScrollView()
     let contentView = UIView()
+    
+    let favoriteButton: UIButton = {
+        let fav = UIButton()
+        fav.tintColor = AppColors.grey
+        fav.setImage(AppIcons.heart.withRenderingMode(.alwaysTemplate), for: .normal)
+        return fav
+    }()
+    
+    let favBackground: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lighterGrey
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        return view
+    }()
 
     
     // MARK: - ViewDidLoad
@@ -143,6 +158,8 @@ class ProductDetailViewController: UIViewController {
     func addSubViews() {
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(favBackground)
+        favBackground.addSubview(favoriteButton)
         contentView.addSubview(priceLabel)
         contentView.addSubview(descriptionTitle)
         contentView.addSubview(descriptionLabel)
@@ -195,6 +212,18 @@ class ProductDetailViewController: UIViewController {
             make.trailing.equalToSuperview().inset(5)
         }
         
+        favoriteButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        
+        favBackground.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().inset(30)
+            make.width.height.equalTo(40)
+
+        }
+            
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(15)
             make.leading.equalTo(titleLabel.snp.leading)
