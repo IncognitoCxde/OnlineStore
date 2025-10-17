@@ -1,4 +1,7 @@
-//  ProductDetailViewController
+//  ProductDetailViewController - BM
+
+
+// MARK: - Imports
 
 import UIKit
 import SnapKit
@@ -6,26 +9,96 @@ import DesignSystem
 
 class ProductDetailViewController: UIViewController {
     
-    private let viewModel: ProductDetailViewModel
+    // MARK: - Variables
     
-    // UI элементы
-    private let scrollView = UIScrollView()
-    private let contentView = UIStackView()
+    let screenTitle = UILabel()
     
-    private let productImageView = UIImageView()
+    let cartButton: UIButton = {
+        let button = UIButton()
+        let image = AppIcons.cart
+        button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    private let productInfo: ProductInfo
+    
+    let backButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(named: "arrow")
+        button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    private let imageView = UIImageView()
     private let titleLabel = UILabel()
     private let priceLabel = UILabel()
-    private let favoriteButton = UIButton(type: .system)
-    private let descriptionTitleLabel = UILabel()
+    private let descriptionTitle = UILabel()
     private let descriptionLabel = UILabel()
-    private let featuresStack = UIStackView()
     
-    private let buyNowButton = UIButton(type: .system)
-    private let addToCartButton = UIButton(type: .system)
+    private let buyNowButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Buy Now", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = AppFont.medium_18pt(size: 18)
+        button.backgroundColor = AppColors.customBlue
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
+    private let addToCart: UIButton = {
+        let button = UIButton()
+        button.setTitle("Add to Cart", for: .normal)
+        button.titleLabel?.font = AppFont.medium_18pt(size: 18)
+        button.setTitleColor(AppColors.arsenicDark, for: .normal)
+        button.backgroundColor = .lighterGrey
+        button.layer.borderColor = AppColors.grey.cgColor
+        button.layer.borderWidth = 0.3
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+
+    
+    // MARK: - ViewDidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = AppColors.lightGrey
+        setUpNav()
+        setUpBackButton()
+        setUpScrollView()
+        addSubViews()
+        setUpUI()
+        setUpConstraints()
+    }
+    
+    func setUpNav() {
+        view.addSubview(screenTitle)
+        screenTitle.textColor = AppColors.arsenicDark
+        screenTitle.font = AppFont.medium_18pt(size: 19)
+        screenTitle.textAlignment = .center
+        screenTitle.text = "Product details"
+        
+        screenTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(70)
+        }
+        
+        view.addSubview(cartButton)
+        cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
+        cartButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(70)
+            make.trailing.equalToSuperview().inset(20)
+        }
+    }
     
     // MARK: - Init
-    init(viewModel: ProductDetailViewModel) {
-        self.viewModel = viewModel
+    init(productInfo: ProductInfo) {
+        self.productInfo = productInfo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,181 +106,149 @@ class ProductDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGray6
-        setupNavBar()
-        setupScrollView()
-        setupContent()
-        setupBottomButtons()
-        configure()
-    }
-    
-    // MARK: - Setup
-    private func setupNavBar() {
-        title = "Product details"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backTapped)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "cart"),
-            style: .plain,
-            target: self,
-            action: #selector(cartTapped)
-        )
-    }
-    
-    private func setupScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.axis = .vertical
-        contentView.spacing = 16
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: - Back Button
+    func setUpBackButton() {
+        view.addSubview(backButton)
         
+        backButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(80)
+            make.leading.equalToSuperview().inset(20)
+            make.height.equalTo(20)
+        }
+        
+        backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+    }
+    
+    // MARK: - Scroll
+    
+    func setUpScrollView() {
+        
+        scrollView.bouncesVertically = true
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.bouncesHorizontally = false
+        scrollView.isScrollEnabled = true
         view.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(backButton.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalTo(scrollView)
+        }
+    }
+    
+    func addSubViews() {
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(priceLabel)
+        contentView.addSubview(descriptionTitle)
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(addToCart)
+        contentView.addSubview(buyNowButton)
+    }
+    
+    // MARK: - UI
+    
+    func setUpUI() {
+        imageView.setImage(from: productInfo.images?.first)
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        titleLabel.text = productInfo.title
+        titleLabel.font = AppFont.semiBold_24pt(size: 22)
+        titleLabel.numberOfLines = 3
+        titleLabel.textColor = AppColors.arsenicDark
+        
+        priceLabel.text = "$ \(productInfo.price ?? 0)"
+        priceLabel.font = AppFont.bold_24pt(size: 25)
+        priceLabel.textColor = AppColors.arsenicDark
+        
+        descriptionTitle.text = "Description of product"
+        descriptionTitle.font = AppFont.medium_18pt(size: 19)
+        descriptionTitle.textColor = AppColors.arsenicDark
+        
+        descriptionLabel.text = productInfo.description ?? "No Description"
+        descriptionLabel.numberOfLines = 10
+        descriptionLabel.font = AppFont.regular18pt(size: 16)
+        descriptionLabel.textAlignment = .left
+        descriptionLabel.textColor = AppColors.arsenicDark
+        
+    }
+    
+    // MARK: - Constraints
+    
+    func setUpConstraints() {
+        
+        imageView.snp.makeConstraints { make in
+            make.height.equalTo(230)
+            make.width.equalTo(380)
+            make.leading.trailing.equalTo(contentView).inset(10)
+            make.top.equalToSuperview().inset(20)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(15)
+            make.leading.equalTo(imageView.snp.leading).inset(8)
+            make.trailing.equalToSuperview().inset(5)
+        }
+        
+        priceLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
+            make.leading.equalTo(titleLabel.snp.leading)
+        }
+        
+        descriptionTitle.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(15)
+            make.leading.equalTo(priceLabel.snp.leading)
             
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
-        ])
-    }
-    
-    private func setupContent() {
-        // Image
-        productImageView.contentMode = .scaleAspectFit
-        productImageView.layer.cornerRadius = 12
-        productImageView.clipsToBounds = true
-        productImageView.translatesAutoresizingMaskIntoConstraints = false
-        productImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        
-        // Title + Price + Favorite
-        let headerStack = UIStackView()
-        headerStack.axis = .horizontal
-        headerStack.alignment = .center   // теперь кнопка выровнена по центру
-        headerStack.distribution = .equalSpacing
-        
-        let labelsStack = UIStackView(arrangedSubviews: [titleLabel, priceLabel])
-        labelsStack.axis = .vertical
-        labelsStack.spacing = 4
-        
-        titleLabel.font = .systemFont(ofSize: 18, weight: .medium)
-        titleLabel.numberOfLines = 0
-        titleLabel.textColor = .black
-        
-        priceLabel.font = .systemFont(ofSize: 22, weight: .bold)
-        priceLabel.textColor = .label
-        
-        favoriteButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
-        favoriteButton.tintColor = .systemGray
-        favoriteButton.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
-        
-        headerStack.addArrangedSubview(labelsStack)
-        headerStack.addArrangedSubview(favoriteButton)
-        
-        // Description
-        descriptionTitleLabel.text = "Description of product"
-        descriptionTitleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        
-        descriptionLabel.font = .systemFont(ofSize: 14)
-        descriptionLabel.textColor = .secondaryLabel
-        descriptionLabel.numberOfLines = 0
-        
-        // Features
-        featuresStack.axis = .vertical
-        featuresStack.spacing = 6
-        
-        // Add arranged subviews
-        contentView.addArrangedSubview(productImageView)
-        contentView.addArrangedSubview(headerStack)
-        contentView.addArrangedSubview(descriptionTitleLabel)
-        contentView.addArrangedSubview(descriptionLabel)
-        contentView.addArrangedSubview(featuresStack)
-    }
-    
-    private func setupBottomButtons() {
-        let buttonsStack = UIStackView(arrangedSubviews: [buyNowButton, addToCartButton])
-        buttonsStack.axis = .horizontal
-        buttonsStack.spacing = 12
-        buttonsStack.distribution = .fillEqually
-        buttonsStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        buyNowButton.setTitle("Buy Now", for: .normal)
-        buyNowButton.backgroundColor = .systemBlue
-        buyNowButton.setTitleColor(.white, for: .normal)
-        buyNowButton.layer.cornerRadius = 10
-        
-        addToCartButton.setTitle("Add to Cart", for: .normal)
-        addToCartButton.layer.borderWidth = 1
-        addToCartButton.layer.borderColor = UIColor.systemGray4.cgColor
-        addToCartButton.layer.cornerRadius = 10
-        addToCartButton.setTitleColor(.label, for: .normal)
-        
-        addToCartButton.addTarget(self, action: #selector(addToCartTapped), for: .touchUpInside)
-        
-        view.addSubview(buttonsStack)
-        NSLayoutConstraint.activate([
-            buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            buttonsStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-            buttonsStack.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-    // MARK: - Configure
-    private func configure() {
-        productImageView.image = UIImage(named: viewModel.imageName)
-        titleLabel.text = viewModel.title
-        priceLabel.text = viewModel.price
-        descriptionLabel.text = viewModel.description
-        
-        viewModel.features.forEach { feature in
-            let lbl = UILabel()
-            lbl.text = "• \(feature)"
-            lbl.font = .systemFont(ofSize: 13)
-            lbl.textColor = .secondaryLabel
-            featuresStack.addArrangedSubview(lbl)
         }
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func backTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func cartTapped() {
-        let cartVC = CartViewController() // создаём контроллер, а не ViewModel
-        navigationController?.pushViewController(cartVC, animated: true)
-    }
-    
-    @objc private func favoriteTapped() {
-        let isFav = favoriteButton.tintColor == .systemRed
-        favoriteButton.tintColor = isFav ? .systemGray : .systemRed
-    }
-    
-    @objc private func addToCartTapped() {
-        print("product added to cart")
-//         let product = viewModel.product
-//            CartManager.shared.add(product)
-//            let alert = UIAlertController(
-//                title: "Added",
-//                message: "\(product.title) added to cart",
-//                preferredStyle: .alert
-//            )
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(alert, animated: true)
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(descriptionTitle.snp.bottom).offset(9)
+            make.leading.trailing.equalTo(contentView).inset(20)
         }
+        
+        buyNowButton.snp.makeConstraints { make in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(30)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(45)
+
+        }
+        
+        addToCart.snp.makeConstraints { make in
+            make.top.equalTo(buyNowButton.snp.bottom).offset(8)
+            make.bottom.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(45)
+        }
+        
+        
+    }
     
+    // MARK: - Handle Back Tap
+    @objc func handleBackButton() {
+        self.dismiss(animated: true)
+    }
+    
+    // MARK: - Handle Buy Now
+    
+    @objc func buyNowTapped() {
+        
+    }
+    
+    // MARK: - Handle add to cart
+    @objc func addToCartTapped() {
+        
+    }
+    
+    // MARK: - Cart button handle
+    
+    @objc func cartButtonTapped() {
+        let cartVC = CartViewController()
+        cartVC.modalPresentationStyle = .fullScreen
+        present(cartVC, animated: true)
+    }
 }

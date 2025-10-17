@@ -1,29 +1,20 @@
-//  ProductDetailViewModel
+//  ProductDetailViewModel - BM
 
 import Foundation
 
 final class ProductDetailViewModel {
-
-     let product: ProductInfo
-
-    init(product: ProductInfo) {
-        self.product = product
+    
+    let networkingManager: DetailNetworkingProtocol = DetailNetworkingManager()
+    
+    func fetchProductDetail(for id: Int, completion: @escaping (ProductInfo?) -> Void) {
+        networkingManager.fetchProductDetail(id: id) { result in
+            switch result {
+            case .success(let detail):
+                completion(detail)
+            case .failure(let error):
+                print("Failed to fetch product detail: \(error)")
+                completion(nil)
+            }
+        }
     }
-
-    var title: String {
-        product.title ?? "Product"
-    }
-
-    var price: Double {
-        product.price ?? 0.0
-    }
-
-    var imageName: [String]? {
-        product.images
-    }
-
-    var description: String {
-        product.description ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }
-
 }
