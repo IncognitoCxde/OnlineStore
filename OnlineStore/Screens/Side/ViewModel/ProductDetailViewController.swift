@@ -209,7 +209,7 @@ class ProductDetailViewController: UIViewController {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(15)
             make.leading.equalTo(imageView.snp.leading).inset(8)
-            make.trailing.equalToSuperview().inset(5)
+            make.trailing.equalToSuperview().inset(100)
         }
         
         favoriteButton.snp.makeConstraints { make in

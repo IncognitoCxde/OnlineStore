@@ -38,6 +38,7 @@ class MainViewController: UIViewController {
         button.titleLabel?.font = AppFont.medium_18pt(size: 16)
         return button
     }()
+
     
     var selectedIndexPath = IndexPath(item: 0, section: 0)
     
@@ -171,7 +172,7 @@ class MainViewController: UIViewController {
                 )
                 
                 let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
+                section.orthogonalScrollingBehavior = .none
                 section.interGroupSpacing = 20
                 section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
                 
@@ -208,12 +209,13 @@ class MainViewController: UIViewController {
     
     func configureCollectionConstraints() {
         view.addSubview(ultimateCollectionView)
+
         
         ultimateCollectionView.snp.makeConstraints { make in
             make.top.equalTo(actualAddressPick.snp.bottom)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(40)
         }
         
     }
