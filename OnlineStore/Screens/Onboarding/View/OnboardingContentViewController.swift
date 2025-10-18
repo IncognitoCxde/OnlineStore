@@ -22,8 +22,8 @@ final class OnboardingContentViewController: UIViewController {
     private let descriptionLabel = UILabel()
     
     private let buttonContainer = UIView()
-    private let actionButton = UIButton.makeStyledButton(text: "Next")
-    
+    private let onboardingButton = UIButton.makeStyled(style: .onboardingAction, title: "Next")
+
     // MARK: - Init
     
     init(slide: OnboardingSlide) {
@@ -49,7 +49,7 @@ final class OnboardingContentViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animateButtonWiggle(actionButton)
+        animateButtonWiggle(onboardingButton)
     }
     
     // MARK: - UI Setup
@@ -64,7 +64,7 @@ final class OnboardingContentViewController: UIViewController {
         view.addSubview(descriptionLabel)
         view.addSubview(buttonContainer)
         
-        actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
+        onboardingButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
     }
     
     private func detailsUI() {
@@ -85,19 +85,12 @@ final class OnboardingContentViewController: UIViewController {
         descriptionLabel.textAlignment = .left
         descriptionLabel.numberOfLines = 1
         
-        actionButton.setTitle("Next", for: .normal)
-        actionButton.backgroundColor = .white
-        actionButton.layer.cornerRadius = 12
-        actionButton.clipsToBounds = false
-        actionButton.layer.masksToBounds = false
-//        actionButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
-        
         buttonContainer.backgroundColor = .clear
         buttonContainer.clipsToBounds = false
         buttonContainer.layer.masksToBounds = false
-        buttonContainer.addSubview(actionButton)
+        buttonContainer.addSubview(onboardingButton)
         
-        actionButton.snp.makeConstraints { make in
+        onboardingButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -162,7 +155,7 @@ final class OnboardingContentViewController: UIViewController {
         imageView.image = slide.image
         
         let buttonTitle = isLastSlide ? "Get Started" : "Next"
-        actionButton.setTitle(buttonTitle, for: .normal)
+        onboardingButton.setTitle(buttonTitle, for: .normal)
     }
     
     // MARK: - Actions

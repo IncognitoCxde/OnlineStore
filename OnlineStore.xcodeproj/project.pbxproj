@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05E2F8CA2EA3909600537C0D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 05E2F8C92EA3909600537C0D /* FirebaseAuth */; };
+		05E2F8CC2EA3909600537C0D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 05E2F8CB2EA3909600537C0D /* FirebaseCore */; };
+		05E2F8CE2EA3918500537C0D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 05E2F8CD2EA3918500537C0D /* FirebaseFirestore */; };
 		576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 576855CE2E9976C10031BFFA /* DesignSystem */; };
 		57739EB92E9AA31300B70C80 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57739EB32E9AA31300B70C80 /* Networking.framework */; };
 		57739EBA2E9AA31300B70C80 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57739EB32E9AA31300B70C80 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -51,6 +54,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Screens/Extensions/Untitled.swift,
 			);
 			target = 572006942E87DD3C0079250D /* OnlineStore */;
 		};
@@ -80,10 +84,13 @@
 				57C050FB2E9A88C100107327 /* DesignSystem in Frameworks */,
 				57C050FA2E9A88C100107327 /* DesignSystem in Frameworks */,
 				57C050F92E9A88C100107327 /* DesignSystem in Frameworks */,
+				05E2F8CE2EA3918500537C0D /* FirebaseFirestore in Frameworks */,
 				57C050F82E9A88C100107327 /* DesignSystem in Frameworks */,
 				57C050F72E9A88C100107327 /* DesignSystem in Frameworks */,
 				576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */,
 				57739EB92E9AA31300B70C80 /* Networking.framework in Frameworks */,
+				05E2F8CC2EA3909600537C0D /* FirebaseCore in Frameworks */,
+				05E2F8CA2EA3909600537C0D /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +160,9 @@
 				572012D22E8EC9F60079250D /* DesignSystem */,
 				57201C512E9287D80079250D /* DesignSystem */,
 				576855CE2E9976C10031BFFA /* DesignSystem */,
+				05E2F8C92EA3909600537C0D /* FirebaseAuth */,
+				05E2F8CB2EA3909600537C0D /* FirebaseCore */,
+				05E2F8CD2EA3918500537C0D /* FirebaseFirestore */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
@@ -210,6 +220,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				576855CD2E9976C10031BFFA /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */,
+				05E2F8C82EA3909600537C0D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -275,6 +286,8 @@
 				DEVELOPMENT_TEAM = U5T562CXKJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnlineStore/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OnlineStore;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -307,6 +320,8 @@
 				DEVELOPMENT_TEAM = U5T562CXKJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OnlineStore/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OnlineStore;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -551,6 +566,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		05E2F8C82EA3909600537C0D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.4.0;
+			};
+		};
 		576855CD2E9976C10031BFFA /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/IncognitoCxde/DesignSystem-OnlineStore";
@@ -562,6 +585,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		05E2F8C92EA3909600537C0D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05E2F8C82EA3909600537C0D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		05E2F8CB2EA3909600537C0D /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05E2F8C82EA3909600537C0D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		05E2F8CD2EA3918500537C0D /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05E2F8C82EA3909600537C0D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		572012CA2E8EC1ED0079250D /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;

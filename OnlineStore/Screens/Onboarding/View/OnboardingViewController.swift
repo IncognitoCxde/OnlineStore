@@ -48,7 +48,7 @@ final class OnboardingViewController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = AppColors.lightGrey
         
         addChild(pageVC)
         view.addSubview(pageVC.view)
