@@ -49,32 +49,54 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     // MARK: - DidSelectItemAt
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let sectionType = SectionType(rawValue: indexPath.section),
-              sectionType == .categories else { return }
-
-        // UI
-        if let oldCell = collectionView.cellForItem(at: selectedIndexPath) as? CategoriesCollectionViewCell {
-            oldCell.updateSelection(selected: false, animated: true)
-        }
-        if let newCell = collectionView.cellForItem(at: indexPath) as? CategoriesCollectionViewCell {
-            newCell.updateSelection(selected: true, animated: true)
-        }
-
-        selectedIndexPath = indexPath
+        guard let sectionType = SectionType(rawValue: indexPath.section) else { fatalError() }
         
-        let apiCategory = viewModel.categories[indexPath.item]
-        let categoryName = apiCategory.name.lowercased()
+        switch sectionType {
+        case .categories:
+            // UI
+            if let oldCell = collectionView.cellForItem(at: selectedIndexPath) as? CategoriesCollectionViewCell {
+                oldCell.updateSelection(selected: false, animated: true)
+            }
+            if let newCell = collectionView.cellForItem(at: indexPath) as? CategoriesCollectionViewCell {
+                newCell.updateSelection(selected: true, animated: true)
+            }
 
-        if let categoryEnum = Categories(rawValue: categoryName) {
-            viewModel.loadProducts(for: categoryEnum) { [weak self] in
+            selectedIndexPath = indexPath
+            
+            let apiCategory = viewModel.categories[indexPath.item]
+            let categoryName = apiCategory.name.lowercased()
+
+            if let categoryEnum = Categories(rawValue: categoryName) {
+                viewModel.loadProducts(for: categoryEnum) { [weak self] in
+                    DispatchQueue.main.async {
+                        self?.ultimateCollectionView.reloadSections(IndexSet(integer: SectionType.products.rawValue))
+                    }
+                }
+            } else {
+                print("Unknown category from API:", categoryName)
+            }
+        case .products:
+            let product = (sectionType == .products) ? viewModel.products[indexPath.item] : viewModel.products[indexPath.item]
+            let productId = product.id ?? 0
+            
+            let detailNetworkingManager = DetailNetworkingManager()
+            
+            detailNetworkingManager.fetchProductDetail(id: productId) { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.ultimateCollectionView.reloadSections(IndexSet(integer: SectionType.products.rawValue))
+                    switch result {
+                    case .success(let detail):
+                        let detailsVC = ProductDetailViewController(productInfo: detail)
+                        detailsVC.modalPresentationStyle = .fullScreen
+                        self?.present(detailsVC, animated: true)
+                    case .failure(let error):
+                        print("Failed to fetch product details:", error)
+                    }
                 }
             }
-        } else {
-            print("Unknown category from API:", categoryName)
-        }
+        case .specials:
+            break
 
+        }
     }
     
     // MARK: - ViewForSupplementaryElementOfKind

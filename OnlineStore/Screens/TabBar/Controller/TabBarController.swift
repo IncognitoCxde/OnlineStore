@@ -8,13 +8,14 @@ class TabBarController: UITabBarController {
         setUpTabBar()
     }
 
-    func setUpTabBar() {
+    private func setUpTabBar() {
         let tabBar = UITabBar()
         tabBar.backgroundColor = .white
         setValue(tabBar, forKey: "tabBar")
 
         var viewControllers: [UIViewController] = []
 
+        // 1. Home
         let mainVC = MainViewController()
         mainVC.tabBarItem = UITabBarItem(
             title: "Home",
@@ -23,6 +24,7 @@ class TabBarController: UITabBarController {
         )
         viewControllers.append(mainVC)
 
+        // 2. Wishlist
         let wishVC = WishlistViewController()
         wishVC.tabBarItem = UITabBarItem(
             title: "Wishlist",
@@ -31,6 +33,7 @@ class TabBarController: UITabBarController {
         )
         viewControllers.append(wishVC)
 
+        // 3. Search
         let searchVC = SearchViewController()
         searchVC.tabBarItem = UITabBarItem(
             title: "Search",
@@ -39,24 +42,27 @@ class TabBarController: UITabBarController {
         )
         viewControllers.append(searchVC)
 
+        // 4. Profile (добавим позже, чтобы Manager мог встать перед ним)
         let profileVC = ProfileViewController()
         profileVC.tabBarItem = UITabBarItem(
             title: "Profile",
             image: AppIcons.profile.withRenderingMode(.alwaysOriginal),
             selectedImage: AppIcons.profileActive.withRenderingMode(.alwaysOriginal)
         )
-        viewControllers.append(profileVC)
 
-        //Добавляем менеджерский экран, если accountType == .manager
+        // Если роль менеджера → вставляем Manager на 3‑ю позицию (индекс 2)
         if UserSession.shared.accountType == .manager {
             let managerVC = ManagerDashboardViewController()
             managerVC.tabBarItem = UITabBarItem(
                 title: "Manager",
                 image: AppIcons.manager.withRenderingMode(.alwaysOriginal),
-                selectedImage: AppIcons.manager.withRenderingMode(.alwaysOriginal)
+                selectedImage: AppIcons.manager.withRenderingMode(.alwaysOriginal) //manager поменять на managerActive, после обновления дизайн системы
             )
-            viewControllers.append(managerVC)
+            viewControllers.insert(managerVC, at: 2) // теперь Manager идёт третьим
         }
+
+        // В конце добавляем Profile
+        viewControllers.append(profileVC)
 
         self.setViewControllers(viewControllers, animated: true)
     }

@@ -28,6 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             onboardingCoordinator?.start()
         }
         
+        
         window.makeKeyAndVisible()
     }
 

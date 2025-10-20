@@ -4,8 +4,9 @@ import DesignSystem
 
 final class CustomTextField: UIView {
 
-    private let textField = UITextField()
+    public let textField = UITextField()
     private let rightIconView = UIImageView()
+    private var eyeButton: UIButton?
 
     var text: String? {
         get { textField.text }
@@ -17,16 +18,16 @@ final class CustomTextField: UIView {
         set { textField.inputView = newValue }
     }
 
-    init(placeholder: String, isSecure: Bool = false, showsArrow: Bool = false) {
+    init(placeholder: String, isSecure: Bool = false, showsArrow: Bool = false, showsEyeIcon: Bool = false) {
         super.init(frame: .zero)
-        setupUI(placeholder: placeholder, isSecure: isSecure, showsArrow: showsArrow)
+        setupUI(placeholder: placeholder, isSecure: isSecure, showsArrow: showsArrow, showsEyeIcon: showsEyeIcon)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI(placeholder: String, isSecure: Bool, showsArrow: Bool) {
+    private func setupUI(placeholder: String, isSecure: Bool, showsArrow: Bool, showsEyeIcon: Bool) {
         layer.cornerRadius = 10
         layer.borderWidth = 1
         layer.borderColor = AppColors.grey.cgColor
@@ -71,6 +72,24 @@ final class CustomTextField: UIView {
             textField.snp.makeConstraints {
                 $0.trailing.equalTo(rightIconView.snp.leading).offset(-8)
             }
+        } else if showsEyeIcon {
+            let eye = UIButton(type: .custom)
+            eye.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            eye.tintColor = AppColors.grey
+            eye.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+            eyeButton = eye
+
+            container.addSubview(eye)
+            eye.snp.makeConstraints {
+                $0.centerY.equalTo(textField)
+                $0.trailing.equalToSuperview().inset(12)
+                $0.width.height.equalTo(20)
+            }
+
+            textField.snp.makeConstraints {
+                $0.trailing.equalTo(eye.snp.leading).offset(-8)
+                $0.height.greaterThanOrEqualTo(24)
+            }
         } else {
             textField.snp.makeConstraints {
                 $0.trailing.equalToSuperview().inset(12)
@@ -82,4 +101,28 @@ final class CustomTextField: UIView {
             $0.height.equalTo(48)
         }
     }
+
+    @objc private func togglePasswordVisibility() {
+        textField.isSecureTextEntry.toggle()
+
+        let imageName = textField.isSecureTextEntry ? "eye.slash" : "eye"
+        eyeButton?.setImage(UIImage(systemName: imageName), for: .normal)
+
+        // Цвет глазика
+        eyeButton?.tintColor = textField.isSecureTextEntry ? AppColors.grey : AppColors.customBlue
+
+        // caret fix
+        let currentText = textField.text
+        textField.text = ""
+        textField.insertText(currentText ?? "")
+    }
+    
+    public func setValidationState(isValid: Bool?) {
+        guard let isValid = isValid else {
+            layer.borderColor = AppColors.grey.cgColor
+            return
+        }
+        layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.red.cgColor
+    }
+
 }

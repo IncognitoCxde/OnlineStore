@@ -33,7 +33,6 @@ final class MainViewModel {
             defer { group.leave() }
             switch result {
             case .success(let products):
-                print("Products fetched successfully")
                 self.products = products
                 self.onDataUpdated?()
             case .failure(let error):

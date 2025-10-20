@@ -2,9 +2,11 @@ import UIKit
 import SnapKit
 import DesignSystem
 
-class SignInViewController: UIViewController {
+final class SignInViewController: BaseViewController {
 
     private let viewModel = SignInViewModel()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
 
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -13,18 +15,40 @@ class SignInViewController: UIViewController {
         return imageView
     }()
 
-    private let emailField = LabeledFieldView(title: "E-mail", field: CustomTextField(placeholder: "Enter your email"))
-    private let passwordField = LabeledFieldView(title: "Password", field: CustomTextField(placeholder: "Enter your password", isSecure: true))
+    private let emailField = LabeledFieldView(
+        title: "E-mail",
+        field: CustomTextField(placeholder: "Enter your email"))
+
+    private let passwordField = LabeledFieldView(
+        title: "Password",
+        field: CustomTextField(
+            placeholder: "Enter your password",
+            isSecure: true,
+            showsEyeIcon: true
+        )
+    )
+
+    private let passwordHintLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Minimum 8 characters, one letter and one digit"
+        label.font = AppFont.regular18pt(size: 13)
+        label.textColor = AppColors.grey
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
 
     private let signInButton = UIButton.makeStyled(style: .authPrimary, title: "Sign In")
     private let switchToSignUpButton = UIButton.makeStyled(style: .authSecondary, title: "")
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollViewToAdjust = scrollView
         setupNavigation()
         setupUI()
         setupActions()
         setupAttributedSignUpText()
+        setupPasswordValidation()
     }
 
     private func setupNavigation() {
@@ -37,9 +61,19 @@ class SignInViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = AppColors.lightGrey
 
-        view.addSubview(logoImageView)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        scrollView.keyboardDismissMode = .interactive
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width)
+        }
+
+        contentView.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(60)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(160)
         }
@@ -53,26 +87,28 @@ class SignInViewController: UIViewController {
         stack.spacing = 20
         stack.alignment = .fill
 
-        view.addSubview(stack)
+        contentView.addSubview(stack)
         stack.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(48)
             $0.leading.trailing.equalToSuperview().inset(24)
         }
 
         [emailField, passwordField].forEach {
-            $0.snp.makeConstraints { make in
-                make.height.equalTo(72)
-            }
+            $0.snp.makeConstraints { $0.height.equalTo(72) }
+        }
+        signInButton.snp.makeConstraints { $0.height.equalTo(52) }
+
+        contentView.addSubview(passwordHintLabel)
+        passwordHintLabel.snp.makeConstraints {
+            $0.top.equalTo(passwordField.snp.bottom).offset(4)
+            $0.leading.trailing.equalTo(passwordField)
         }
 
-        signInButton.snp.makeConstraints {
-            $0.height.equalTo(52)
-        }
-
-        view.addSubview(switchToSignUpButton)
+        contentView.addSubview(switchToSignUpButton)
         switchToSignUpButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20)
+            $0.top.equalTo(stack.snp.bottom).offset(32)
             $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
 
@@ -85,17 +121,28 @@ class SignInViewController: UIViewController {
         let fullText = "Don't have an account yet? Sign Up"
         let attributedText = NSMutableAttributedString(string: fullText)
 
-        // Сначала задаём тёмный цвет и шрифт для всего текста
         let fullRange = NSRange(location: 0, length: fullText.count)
         attributedText.addAttribute(.foregroundColor, value: AppColors.arsenicDark, range: fullRange)
         attributedText.addAttribute(.font, value: AppFont.regular18pt(size: 15), range: fullRange)
 
-        // Потом переопределяем цвет для "Login"
         if let range = fullText.range(of: "Sign Up") {
             let nsRange = NSRange(range, in: fullText)
             attributedText.addAttribute(.foregroundColor, value: AppColors.customBlue, range: nsRange)
         }
+
         switchToSignUpButton.setAttributedTitle(attributedText, for: .normal)
+    }
+
+    private func setupPasswordValidation() {
+        (passwordField.field as? CustomTextField)?.textField.addTarget(self, action: #selector(passwordChanged), for: .editingChanged)
+    }
+
+    @objc private func passwordChanged() {
+        guard let password = passwordField.text else { return }
+        let isValid = PasswordValidator.isValid(password)
+        passwordHintLabel.isHidden = false
+        passwordHintLabel.textColor = isValid ? .systemGreen : .red
+        (passwordField.field as? CustomTextField)?.setValidationState(isValid: isValid)
     }
 
     @objc private func signInTapped() {
@@ -104,14 +151,11 @@ class SignInViewController: UIViewController {
             case .success:
                 UserSession.shared.loadUser { loadResult in
                     switch loadResult {
-                    case .success:
-                        self?.navigateToMainTab()
-                    case .failure(let error):
-                        self?.showError(error)
+                    case .success: self?.navigateToMainTab()
+                    case .failure(let error): self?.showError(error)
                     }
                 }
-            case .failure(let error):
-                self?.showError(error)
+            case .failure(let error): self?.showError(error)
             }
         }
     }

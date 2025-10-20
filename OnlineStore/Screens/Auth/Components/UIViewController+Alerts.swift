@@ -12,12 +12,22 @@ extension UIViewController {
         showAlert(title: title, message: error.localizedDescription)
     }
 
-    func showSuccess(message: String, completion: (() -> Void)? = nil) {
+    // Добавлена поддержка autoDismissInterval
+    func showSuccess(message: String, autoDismissInterval: TimeInterval? = nil, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: "Success", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             completion?()
         })
-        present(alert, animated: true)
+        present(alert, animated: true) {
+            guard let interval = autoDismissInterval else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
+                guard self != nil else { return }
+                if alert.presentingViewController != nil {
+                    alert.dismiss(animated: true) {
+                        completion?()
+                    }
+                }
+            }
+        }
     }
 }
-
