@@ -65,7 +65,6 @@ public class ProductCollectionViewCell: UICollectionViewCell {
         addToCartButton.addTarget(self, action: #selector(handleAddToCart), for: .touchUpInside)
         
         contentView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(addToCartButton)

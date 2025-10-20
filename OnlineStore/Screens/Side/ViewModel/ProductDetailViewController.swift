@@ -1,6 +1,5 @@
 //  ProductDetailViewController - BM
 
-
 // MARK: - Imports
 
 import UIKit
@@ -179,7 +178,7 @@ class ProductDetailViewController: UIViewController {
         titleLabel.numberOfLines = 3
         titleLabel.textColor = AppColors.arsenicDark
         
-        priceLabel.text = "$ \(productInfo.price ?? 0)"
+        priceLabel.text = CurrencyManager.shared.convert(priceInUSD: productInfo.price ?? 0)
         priceLabel.font = AppFont.bold_24pt(size: 25)
         priceLabel.textColor = AppColors.arsenicDark
         
