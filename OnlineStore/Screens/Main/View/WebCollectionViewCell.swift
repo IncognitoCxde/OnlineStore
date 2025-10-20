@@ -11,15 +11,15 @@ class WebCollectionViewCell: UICollectionViewCell {
     static let identifier = String(describing: WebCollectionViewCell.self)
     let webView: WKWebView = {
         let wbv = WKWebView()
-        wbv.load(URLRequest(url: URL(string: "https://akns-images.eonline.com/eol_images/Entire_Site/2022917/rs_1024x759-221017110819-1024-hm.jpg?fit=around%7C1024:759&output-quality=90&crop=1024:759;center,top")!))
+        wbv.load(URLRequest(url: URL(string: "https://cdn.hyprop.co.za/image/2023/1/9/84432091-7e55-4796-a29b-849122e4b5cb/5d4f1357-f9fd-4044-b3e4-d1fb74322319.jpg?w=1082&h=608&webp")!))
         return wbv
     }()
     
     let saleLabel: UILabel = {
         let label = UILabel()
-        label.text = "SALE"
-        label.textColor = AppColors.arsenicDark
-        label.font = AppFont.bold_28pt(size: 100)
+        label.text = " SALE 50%"
+        label.textColor = AppColors.lightBlue
+        label.font = AppFont.bold_28pt(size: 60)
         return label
     }()
     

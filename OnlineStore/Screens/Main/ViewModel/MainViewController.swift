@@ -1,4 +1,4 @@
-// Main VC - Benazir Manuchehri
+// Main VC - BM
 
 // MARK: - Imports
 
@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
     
     let actualAddressPick: UIButton = {
         let button = UIButton()
-        button.setTitle("Dushanbe, Tajikistan", for: .normal)
+        button.setTitle("Select Location", for: .normal)
         button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.tintColor = AppColors.arsenicDark
@@ -38,7 +38,10 @@ class MainViewController: UIViewController {
         button.titleLabel?.font = AppFont.medium_18pt(size: 16)
         return button
     }()
-
+    
+    private var dropDownView: DropdownView?
+    private var isDropDownVisible = false
+    
     
     var selectedIndexPath = IndexPath(item: 0, section: 0)
     
@@ -49,7 +52,7 @@ class MainViewController: UIViewController {
         view.backgroundColor = AppColors.lightGrey
         tabBarController?.tabBar.dropShadow()
         setUpFunctions()
-
+        
     }
     
     func setUpFunctions() {
@@ -58,7 +61,7 @@ class MainViewController: UIViewController {
         configureTargets()
         configureCollectionConstraints()
         bindViewModel()
-        
+        restoreLocation()
     }
     
     // MARK: - AddSubViews
@@ -91,7 +94,7 @@ class MainViewController: UIViewController {
             make.top.equalTo(deliveryAddressLabel.snp.bottom)
             make.leading.equalTo(deliveryAddressLabel.snp.leading)
         }
-
+        
     }
     
     // MARK: - Data Centre
@@ -194,8 +197,8 @@ class MainViewController: UIViewController {
         collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
         collectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         collectionView.register(SectionHeaderReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionHeaderReusableView.identifier)
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: SectionHeaderReusableView.identifier)
         collectionView.register(WebCollectionViewCell.self, forCellWithReuseIdentifier: WebCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -209,7 +212,13 @@ class MainViewController: UIViewController {
     
     func configureCollectionConstraints() {
         view.addSubview(ultimateCollectionView)
-
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updatePrices),
+            name: .currencyDidChange,
+            object: nil
+        )
         
         ultimateCollectionView.snp.makeConstraints { make in
             make.top.equalTo(actualAddressPick.snp.bottom)
@@ -223,7 +232,11 @@ class MainViewController: UIViewController {
     // MARK: - Handle Location Button
     
     @objc func selectLocation() {
-        print("drop down different locations..")
+        if isDropDownVisible {
+            hideDropdown()
+        } else {
+            showDropdown()
+        }
     }
     
     @objc func showCart() {
@@ -232,5 +245,102 @@ class MainViewController: UIViewController {
         cartVC.modalPresentationStyle = .fullScreen
         present(cartVC, animated: true)
     }
+    
+    // MARK: - Show Dropdown
+    
+    private func showDropdown() {
+        let dropdown = DropdownView(items: LocationOption.allCases)
+        
+        dropdown.didSelectItem = { [weak self] location in
+            guard let self = self else { return }
+            
+            self.actualAddressPick.setTitle(location.rawValue, for: .normal)
+            
+            let currency: Currency
+            switch location {
+            case .taj:
+                currency = .tjs
+            case .usa:
+                currency = .usd
+            case .germany:
+                currency = .eur
+            case .uk:
+                currency = .gbp
+            case .ua:
+                currency = .uah
+            }
+            
+            CurrencyManager.shared.updateCurrency(to: currency) {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .currencyDidChange, object: currency)
+                }
+            }
+            
+            UserDefaults.standard.set(location.rawValue, forKey: "selectedLocation")
+            UserDefaults.standard.set(currency.rawValue, forKey: "selectedCurrency")
+            
+            self.hideDropdown()
+        }
+        
+        view.addSubview(dropdown)
+        
+        dropdown.snp.makeConstraints { make in
+            make.top.equalTo(actualAddressPick.snp.bottom).offset(8)
+            make.leading.equalTo(actualAddressPick)
+            make.width.equalTo(180)
+            make.height.equalTo(200)
+        }
+        
+        dropdown.alpha = 0
+        dropdown.transform = CGAffineTransform(translationX: 0, y: -10)
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       options: .curveEaseOut) {
+            dropdown.alpha = 1
+            dropdown.transform = .identity
+        }
+        
+        dropDownView = dropdown
+        isDropDownVisible = true
+    }
+    
+    // MARK: - Hide Dropdown
+    
+    private func hideDropdown() {
+        guard let dropdown = dropDownView else { return }
+        UIView.animate(withDuration: 0.25, animations: {
+            dropdown.alpha = 0
+        }, completion: { _ in
+            dropdown.removeFromSuperview()
+        })
+        dropDownView = nil
+        isDropDownVisible = false
+    }
+    
+    @objc private func updatePrices() {
+        ultimateCollectionView.reloadData()
+    }
+    
+    // MARK: - Location Storage
 
+    func restoreLocation() {
+        if let savedLocation = UserDefaults.standard.string(forKey: "selectedLocation"),
+           let location = LocationOption(rawValue: savedLocation),
+           let savedCurrencyRaw = UserDefaults.standard.string(forKey: "selectedCurrency"),
+           let savedCurrency = Currency(rawValue: savedCurrencyRaw) {
+            
+            actualAddressPick.setTitle(location.rawValue, for: .normal)
+            
+            CurrencyManager.shared.updateCurrency(to: savedCurrency) {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .currencyDidChange, object: savedCurrency)
+                }
+            }
+    }
+    }
+
+}
+
+extension Notification.Name {
+    static let currencyDidChange = Notification.Name("currencyDidChange")
 }

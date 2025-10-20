@@ -107,7 +107,8 @@ public class ProductCollectionViewCell: UICollectionViewCell {
         }
 
         titleLabel.text = product.title ?? "Product"
-        priceLabel.text = "$\(product.price ?? 0.0)"
+        priceLabel.text = CurrencyManager.shared.convert(priceInUSD: product.price ?? 0)
+
     }
     
     @objc func handleAddToCart() {
