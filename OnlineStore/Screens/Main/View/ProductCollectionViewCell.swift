@@ -1,6 +1,7 @@
 //
 //  ProductCollectionViewCell
 
+// MARK: - Imports
 
 import UIKit
 import SnapKit
@@ -18,6 +19,10 @@ public class ProductCollectionViewCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let priceLabel = UILabel()
     private let addToCartButton = UIButton()
+    
+    private var product: Product?
+    
+    public var addToCartAction: ((Product) -> Void)?
     
     // MARK: - Init
     
@@ -70,6 +75,8 @@ public class ProductCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(addToCartButton)
     }
     
+    // MARK: - Constraints
+    
     private func setupUI() {
         imageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -92,13 +99,13 @@ public class ProductCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(priceLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(10)
-//            make.height.equalTo(25)
         }
     }
     
     // MARK: - Configure
     
     public func configure(with product: Product) {
+        self.product = product
         if (product.images?.first) != nil {
             imageView.setImage(from: product.images?.first)
         } else {
@@ -110,7 +117,10 @@ public class ProductCollectionViewCell: UICollectionViewCell {
 
     }
     
+    // MARK: - Add to Cart Handler
+    
     @objc func handleAddToCart() {
-        print("Product added to cart!")
+        guard let product = product else { print("Product nil"); return }
+        addToCartAction?(product)
     }
 }

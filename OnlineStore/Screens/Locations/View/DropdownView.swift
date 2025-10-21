@@ -22,13 +22,13 @@ final class DropdownView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
 
     private func setUp() {
-        layer.cornerRadius = 12
-        layer.masksToBounds = true
-        backgroundColor = AppColors.lightGrey
-        layer.shadowColor = AppColors.arsenicDark.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 6
+        self.layer.cornerRadius = 12
+        self.layer.masksToBounds = true
+        self.backgroundColor = .white
+        self.layer.shadowColor = AppColors.arsenicDark.cgColor
+        self.layer.shadowOpacity = 2
+        self.layer.shadowOffset = CGSize(width: 3, height: 3)
+        self.layer.shadowRadius = 6
 
         tableView.delegate = self
         tableView.dataSource = self

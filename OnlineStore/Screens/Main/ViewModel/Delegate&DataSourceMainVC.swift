@@ -35,11 +35,34 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let isSelected = indexPath == selectedIndexPath
             cell.configure(with: viewModel.categories[indexPath.item].name, selected: isSelected)
             return cell
+            
         case .products:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as! ProductCollectionViewCell
             let product = viewModel.products[indexPath.item]
             cell.configure(with: product)
+            
+            cell.addToCartAction = { [weak self] selectedProduct in
+                guard let self = self else { return }
+                
+                let cartItem = CartItem(
+                    id: UUID(),
+                    name: selectedProduct.title ?? "",
+                    imageName: selectedProduct.images?.first ?? "",
+                    price: selectedProduct.price ?? 0,
+                    quantity: 1,
+                    isSelected: true
+                )
+                
+                CartManager.shared.addItem(cartItem)
+                
+                let alert = UIAlertController(title: "Added!", message: "\(cartItem.name) added to cart.", preferredStyle: .alert)
+                self.present(alert, animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    alert.dismiss(animated: true)
+                }
+            }
             return cell
+            
         case .specials:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebCollectionViewCell.identifier, for: indexPath) as! WebCollectionViewCell
             return cell

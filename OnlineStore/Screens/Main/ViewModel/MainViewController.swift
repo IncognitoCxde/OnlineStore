@@ -240,7 +240,6 @@ class MainViewController: UIViewController {
     }
     
     @objc func showCart() {
-        print("working..")
         let cartVC = CartViewController()
         cartVC.modalPresentationStyle = .fullScreen
         present(cartVC, animated: true)
@@ -255,7 +254,6 @@ class MainViewController: UIViewController {
             guard let self = self else { return }
             
             self.actualAddressPick.setTitle(location.rawValue, for: .normal)
-            
             let currency: Currency
             switch location {
             case .taj:

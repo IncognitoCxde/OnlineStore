@@ -9,25 +9,23 @@ import DesignSystem
 // MARK: - Protocol
 
 protocol CartTableViewCellDelegate: AnyObject {
-    func didTapTrash(for cell: CartTableViewCell)
-    func didChangeQuantity(for cell: CartTableViewCell, to quantity: Int)
+    func didTapTrash(for item: CartItem)
+    func didChangeQuantity(for item: CartItem, to quantity: Int)
+    func didToggleSelection(for item: CartItem)
 }
 
 final class CartTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    static let identifier = "CartTableViewCell"
+    static let identifier = String(describing: CartTableViewCell.self)
     weak var delegate: CartTableViewCellDelegate?
     
-    private var quantity: Int = 1 {
-        didSet {
-            quantityLabel.text = "\(quantity)"
-            delegate?.didChangeQuantity(for: self, to: quantity)
-        }
-    }
+    var item: CartItem?
     
-    private var isChecked = false {
+    var quantity: Int = 1
+    
+    var isChecked = true {
         didSet {
             updateCheckbox()
         }
@@ -35,33 +33,32 @@ final class CartTableViewCell: UITableViewCell {
     
     // MARK: - UI Elements
     
-    private let containerView = UIView()
-    private let productImageView = UIImageView()
-    private let titleLabel = UILabel()
-    private let priceLabel = UILabel()
+    let containerView = UIView()
+    let productImageView = UIImageView()
+    let titleLabel = UILabel()
+    let priceLabel = UILabel()
     
-    private let checkboxButton = UIButton(type: .system)
-    private let minusButton = UIButton(type: .system)
-    private let plusButton = UIButton(type: .system)
-    private let quantityLabel = UILabel()
-    private let trashButton = UIButton(type: .system)
+    let checkboxButton = UIButton(type: .system)
+    let minusButton = UIButton(type: .system)
+    let plusButton = UIButton(type: .system)
+    var quantityLabel = UILabel()
+    let trashButton = UIButton(type: .system)
     
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setupUI()
         setupActions()
+        setUpConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-// MARK: - UI Setup
-
-private extension CartTableViewCell {
+    
+    // MARK: - Set up UI
     
     func setupUI() {
         backgroundColor = .clear
@@ -75,9 +72,6 @@ private extension CartTableViewCell {
         containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.addSubview(containerView)
         
-        checkboxButton.layer.cornerRadius = 6
-        checkboxButton.layer.borderWidth = 1
-        checkboxButton.layer.borderColor = UIColor.systemGray3.cgColor
         updateCheckbox()
         
         productImageView.contentMode = .scaleAspectFill
@@ -88,16 +82,18 @@ private extension CartTableViewCell {
         titleLabel.textColor = AppColors.arsenicDark
         
         
-        priceLabel.font = AppFont.semiBold_18pt(size: 18)
+        priceLabel.font = AppFont.semiBold_18pt(size: 19)
         priceLabel.textColor = AppColors.arsenicDark
         
         minusButton.setImage(AppIcons.remove, for: .normal)
+        minusButton.tintColor = AppColors.grey
         plusButton.setImage(AppIcons.add, for: .normal)
-        trashButton.setImage(UIImage(systemName: "trash.circle"), for: .normal)
+        plusButton.tintColor = AppColors.grey
+        trashButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
+        trashButton.tintColor = AppColors.grey
         
-        quantityLabel.text = "1"
         quantityLabel.font = AppFont.regular18pt(size: 16)
-        quantityLabel.textColor = AppColors.arsenicDark
+        quantityLabel.textColor = AppColors.grey
         quantityLabel.textAlignment = .center
         
         [checkboxButton, productImageView, titleLabel, priceLabel,
@@ -110,59 +106,61 @@ private extension CartTableViewCell {
     // MARK: - Constraints
     
     func setUpConstraints() {
-        containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(8)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(8)
         }
         
-        checkboxButton.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(12)
-            $0.centerY.equalTo(productImageView)
-            $0.size.equalTo(24)
+        checkboxButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.centerY.equalTo(productImageView)
+            make.size.equalTo(24)
         }
         
-        productImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(12)
-            $0.left.equalTo(checkboxButton.snp.right).offset(12)
-            $0.width.height.equalTo(80)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-12)
+        productImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalTo(checkboxButton.snp.right).offset(12)
+            make.width.height.equalTo(80)
+            make.bottom.lessThanOrEqualToSuperview().offset(-12)
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(productImageView)
-            $0.left.equalTo(productImageView.snp.right).offset(12)
-            $0.right.equalToSuperview().offset(-12)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(productImageView).inset(5)
+            make.left.equalTo(productImageView.snp.right).offset(12)
+            make.right.equalToSuperview().offset(-12)
         }
         
         
-        priceLabel.snp.makeConstraints {
-            $0.left.equalTo(titleLabel)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(22)
+        priceLabel.snp.makeConstraints { make in
+            make.left.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(22)
         }
         
-        trashButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-12)
-            $0.bottom.equalTo(priceLabel)
-            $0.size.equalTo(24)
+        trashButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-12)
+            make.bottom.equalTo(priceLabel)
+            make.size.equalTo(24)
         }
         
-        plusButton.snp.makeConstraints {
-            $0.right.equalTo(trashButton.snp.left).offset(-12)
-            $0.centerY.equalTo(trashButton)
-            $0.size.equalTo(24)
+        plusButton.snp.makeConstraints { make in
+            make.right.equalTo(trashButton.snp.left).offset(-12)
+            make.centerY.equalTo(trashButton)
+            make.size.equalTo(24)
         }
         
-        quantityLabel.snp.makeConstraints {
-            $0.right.equalTo(plusButton.snp.left).offset(-4)
-            $0.centerY.equalTo(plusButton)
-            $0.width.equalTo(24)
+        quantityLabel.snp.makeConstraints { make in
+            make.right.equalTo(plusButton.snp.left).offset(-4)
+            make.centerY.equalTo(plusButton)
+            make.width.equalTo(24)
         }
         
-        minusButton.snp.makeConstraints {
-            $0.right.equalTo(quantityLabel.snp.left).offset(-4)
-            $0.centerY.equalTo(plusButton)
-            $0.size.equalTo(24)
+        minusButton.snp.makeConstraints { make in
+            make.right.equalTo(quantityLabel.snp.left).offset(-4)
+            make.centerY.equalTo(plusButton)
+            make.size.equalTo(24)
         }
     }
+    
+    // MARK: - Set Up Actions
     
     func setupActions() {
         checkboxButton.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
@@ -170,46 +168,55 @@ private extension CartTableViewCell {
         minusButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
         trashButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
     }
+    
 }
 
-// MARK: - Actions
-
-private extension CartTableViewCell {
+extension CartTableViewCell {
+    
+    // MARK: - Configuration
+    
+    func configure(with item: CartItem) {
+        self.item = item
+        productImageView.setImage(from: item.imageName)
+        titleLabel.text = item.name
+        titleLabel.font = AppFont.medium_18pt(size: 16)
+        priceLabel.text = CurrencyManager.shared.convert(priceInUSD: item.totalPrice)
+        quantity = item.quantity
+        quantityLabel.text = "\(quantity)"
+        isChecked = item.isSelected
+    }
     
     @objc func toggleCheckbox() {
         isChecked.toggle()
+        item?.isSelected = isChecked
+        delegate?.didToggleSelection(for: item!)
     }
     
     @objc func increaseQuantity() {
         quantity += 1
+        item?.quantity = quantity
+        delegate?.didChangeQuantity(for: item!, to: quantity)
     }
     
     @objc func decreaseQuantity() {
-        if quantity > 1 { quantity -= 1 }
+        if quantity > 1 {
+            quantity -= 1
+            item?.quantity = quantity
+            delegate?.didChangeQuantity(for: item!, to: quantity)
+        }
     }
     
     @objc func deleteTapped() {
-        delegate?.didTapTrash(for: self)
+        delegate?.didTapTrash(for: item ?? itemDefault)
     }
     
     func updateCheckbox() {
         if isChecked {
-            checkboxButton.backgroundColor = AppColors.customBlue
-            checkboxButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            checkboxButton.tintColor = .white
+            checkboxButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+            checkboxButton.tintColor = AppColors.customBlue
         } else {
             checkboxButton.backgroundColor = .clear
             checkboxButton.setImage(nil, for: .normal)
         }
-    }
-}
-
-// MARK: - Configuration
-
-extension CartTableViewCell {
-    func configure(with product: ProductInfo) {
-        productImageView.image = UIImage(named: product.images?.first ?? "")
-        titleLabel.text = product.title
-        priceLabel.text = "$ \(String(format: "%.2f", product.price ?? 0))"
     }
 }
