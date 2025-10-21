@@ -14,6 +14,7 @@
 		579216B42EA7B1A900053ABB /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 579216B32EA7B1A900053ABB /* FirebaseCore */; };
 		579216B62EA7B1A900053ABB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 579216B52EA7B1A900053ABB /* FirebaseStorage */; };
 		579216B82EA7B35700053ABB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 579216B72EA7B35700053ABB /* FirebaseFirestore */; };
+		57921BAF2EA8108600053ABB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 57921BAE2EA8108600053ABB /* SDWebImage */; };
 		57C050F72E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CA2E8EC1ED0079250D /* DesignSystem */; };
 		57C050F82E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CD2E8EC21C0079250D /* DesignSystem */; };
 		57C050F92E9A88C100107327 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 572012CF2E8EC9CB0079250D /* DesignSystem */; };
@@ -87,6 +88,7 @@
 				579216B62EA7B1A900053ABB /* FirebaseStorage in Frameworks */,
 				57C050F82E9A88C100107327 /* DesignSystem in Frameworks */,
 				57C050F72E9A88C100107327 /* DesignSystem in Frameworks */,
+				57921BAF2EA8108600053ABB /* SDWebImage in Frameworks */,
 				576855CF2E9976C10031BFFA /* DesignSystem in Frameworks */,
 				57739EB92E9AA31300B70C80 /* Networking.framework in Frameworks */,
 				579216B42EA7B1A900053ABB /* FirebaseCore in Frameworks */,
@@ -165,6 +167,7 @@
 				579216B32EA7B1A900053ABB /* FirebaseCore */,
 				579216B52EA7B1A900053ABB /* FirebaseStorage */,
 				579216B72EA7B35700053ABB /* FirebaseFirestore */,
+				57921BAE2EA8108600053ABB /* SDWebImage */,
 			);
 			productName = OnlineStore;
 			productReference = 572006952E87DD3C0079250D /* OnlineStore.app */;
@@ -223,6 +226,7 @@
 			packageReferences = (
 				576855CD2E9976C10031BFFA /* XCRemoteSwiftPackageReference "DesignSystem-OnlineStore" */,
 				579216B02EA7B1A900053ABB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				57921BAD2EA8108600053ABB /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 572006962E87DD3C0079250D /* Products */;
@@ -580,6 +584,14 @@
 				minimumVersion = 12.4.0;
 			};
 		};
+		57921BAD2EA8108600053ABB /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -627,6 +639,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 579216B02EA7B1A900053ABB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		57921BAE2EA8108600053ABB /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57921BAD2EA8108600053ABB /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
