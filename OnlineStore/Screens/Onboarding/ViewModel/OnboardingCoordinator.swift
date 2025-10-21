@@ -16,15 +16,15 @@ final class OnboardingCoordinator {
         onboardingVC.onFinish = { [weak self] in
             // Сохраняем флаг, что онбординг завершён
             UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
-            self?.showMain()
+            self?.showSignIn()
         }
         navigationController.setViewControllers([onboardingVC], animated: false)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
     
-    private func showMain() {
-        let mainTabBar = TabBarController()
-        navigationController.setViewControllers([mainTabBar], animated: true)
+    private func showSignIn() {
+        let signInVC = SignInViewController()
+        navigationController.setViewControllers([signInVC], animated: true)
     }
 }

@@ -6,6 +6,10 @@ class ChangePictureViewController: UIViewController {
 
     private let card = UIView()
 
+    var onTakePhoto: (() -> Void)?
+    var onChooseFile: (() -> Void)?
+    var onDeletePhoto: (() -> Void)?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
@@ -62,6 +66,10 @@ class ChangePictureViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(44)
         }
+
+        takePhotoButton.addTarget(self, action: #selector(didTapTakePhoto), for: .touchUpInside)
+        chooseFileButton.addTarget(self, action: #selector(didTapChooseFile), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(didTapDelete), for: .touchUpInside)
     }
 
     @objc private func didTapOutside(_ sender: UITapGestureRecognizer) {
@@ -70,9 +78,19 @@ class ChangePictureViewController: UIViewController {
             dismiss(animated: true)
         }
     }
+
+    @objc private func didTapTakePhoto() {
+        dismiss(animated: true) { self.onTakePhoto?() }
+    }
+
+    @objc private func didTapChooseFile() {
+        dismiss(animated: true) { self.onChooseFile?() }
+    }
+
+    @objc private func didTapDelete() {
+        dismiss(animated: true) { self.onDeletePhoto?() }
+    }
 }
-
-
 
 private extension UIButton {
     static func makeIconButton(
@@ -95,7 +113,7 @@ private extension UIButton {
         button.titleLabel?.font = AppFont.black_24pt(size: 16)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.contentHorizontalAlignment = .leading 
+        button.contentHorizontalAlignment = .leading
 
         if let borderColor = borderColor {
             button.layer.borderWidth = 1

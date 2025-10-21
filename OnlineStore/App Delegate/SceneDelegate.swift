@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             onboardingCoordinator = OnboardingCoordinator(window: window)
             onboardingCoordinator?.start()
         }
-
+   
         window.makeKeyAndVisible()
     }
 

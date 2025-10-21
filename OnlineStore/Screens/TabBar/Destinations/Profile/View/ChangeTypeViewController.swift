@@ -1,10 +1,13 @@
 import UIKit
 import SnapKit
 import DesignSystem
+import FirebaseAuth
+import FirebaseFirestore
 
 class ChangeTypeViewController: UIViewController {
 
     private let card = UIView()
+    var onTypeChanged: ((UserAccountType) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,7 +17,7 @@ class ChangeTypeViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
 
-        card.backgroundColor = .white
+        card.backgroundColor = AppColors.lightGrey
         card.layer.cornerRadius = 16
         view.addSubview(card)
 
@@ -50,6 +53,9 @@ class ChangeTypeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(24)
             $0.height.equalTo(44)
         }
+
+        clientButton.addTarget(self, action: #selector(didTapClient), for: .touchUpInside)
+        managerButton.addTarget(self, action: #selector(didTapManager), for: .touchUpInside)
     }
 
     @objc private func didTapOutside(_ sender: UITapGestureRecognizer) {
@@ -58,8 +64,31 @@ class ChangeTypeViewController: UIViewController {
             dismiss(animated: true)
         }
     }
-}
 
+    @objc private func didTapClient() {
+        changeAccountType(UserAccountType.client)
+    }
+
+    @objc private func didTapManager() {
+        changeAccountType(UserAccountType.manager)
+    }
+
+    private func changeAccountType(_ type: UserAccountType) {
+        guard let uid = UserSession.shared.userID else { return }
+
+        Firestore.firestore().collection("users").document(uid).updateData([
+            "accountType": type.rawValue
+        ]) { error in
+            if let error = error {
+                print("Failed to update account type: \(error.localizedDescription)")
+            } else {
+                UserSession.shared.updateAccountType(type)
+                self.onTypeChanged?(type)
+                self.dismiss(animated: true)
+            }
+        }
+    }
+}
 
 private extension UIButton {
     static func makeIconButton(

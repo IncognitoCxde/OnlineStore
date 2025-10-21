@@ -1,36 +1,31 @@
 import UIKit
 import DesignSystem
-import SnapKit
 
 extension UIButton {
-    static func makeStyledButton(
-        text: String,
-        fontSize: CGFloat = 14,
-        cornerRadius: CGFloat = 12,
-        backgroundColor: UIColor = AppColors.lightGrey,
-        textColor: UIColor = .black,
-        borderWidth: CGFloat = 0.3,
-        borderColor: UIColor = AppColors.babyBlue,
-        shadowColor: UIColor = AppColors.customBlue.withAlphaComponent(0.3),
-        shadowOffset: CGSize = CGSize(width: 0, height: 2),
-        shadowRadius: CGFloat = 4,
-        shadowOpacity: Float = 1
-    ) -> UIButton {
-        var config = UIButton.Configuration.plain()
-        config.title = text
-        config.baseBackgroundColor = backgroundColor
-        config.baseForegroundColor = textColor
-        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 24, bottom: 12, trailing: 24)
-
-        let button = UIButton(configuration: config)
-        button.titleLabel?.font = AppFont.black_24pt(size: fontSize)
-        button.layer.cornerRadius = cornerRadius
-        button.layer.borderWidth = borderWidth
-        button.layer.borderColor = borderColor.cgColor
-        button.clipsToBounds = false
+    static func makeStyled(style: ButtonStyle, title: String) -> UIButton {
+        let config = style.config
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(config.textColor, for: .normal)
+        button.titleLabel?.font = AppFont.black_24pt(size: config.fontSize)
+        button.backgroundColor = config.backgroundColor
+        button.layer.cornerRadius = config.cornerRadius
+        button.layer.borderWidth = config.borderWidth
+        button.layer.borderColor = config.borderColor.cgColor
+        button.layer.shadowColor = config.shadowColor.cgColor
+        button.layer.shadowOffset = config.shadowOffset
+        button.layer.shadowRadius = config.shadowRadius
+        button.layer.shadowOpacity = config.shadowOpacity
         button.layer.masksToBounds = false
-
         button.translatesAutoresizingMaskIntoConstraints = false
+
+        if let height = config.fixedHeight {
+            button.heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        if let minWidth = config.minWidth {
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth).isActive = true
+        }
+
         return button
     }
 }
