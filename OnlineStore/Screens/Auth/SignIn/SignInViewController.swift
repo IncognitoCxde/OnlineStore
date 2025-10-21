@@ -162,6 +162,7 @@ final class SignInViewController: BaseViewController {
     }
 
     @objc private func signInTapped() {
+        print("working..")
         viewModel.signIn(email: emailField.text, password: passwordField.text) { [weak self] result in
             switch result {
             case .success:
