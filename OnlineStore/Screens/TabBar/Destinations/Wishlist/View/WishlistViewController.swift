@@ -5,17 +5,11 @@ import DesignSystem
 class WishlistViewController: UIViewController {
 
     private let viewModel = WishlistViewModel()
-
     private let searchBarView = SearchBarView()
     private let emptyStateView = EmptyStateView(message: "Your wishlist is empty")
 
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 160, height: 240)
-        layout.minimumInteritemSpacing = 16
-        layout.minimumLineSpacing = 24
-        return UICollectionView(frame: .zero, collectionViewLayout: layout)
-    }()
+    private let layout = UICollectionViewFlowLayout()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +23,27 @@ class WishlistViewController: UIViewController {
         searchBarView.focus()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let spacing: CGFloat = 12
+        let itemsPerRow: CGFloat = traitCollection.horizontalSizeClass == .regular ? 3 : 2
+        let totalSpacing = spacing * (itemsPerRow + 1)
+        let availableWidth = collectionView.bounds.width - totalSpacing
+        let itemWidth = floor(availableWidth / itemsPerRow)
+
+        layout.itemSize = CGSize(width: itemWidth, height: 240)
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = 24
+    }
+
     private func setupUI() {
         view.backgroundColor = AppColors.lightGrey
 
         searchBarView.onTextChanged = { [weak self] text in
             self?.viewModel.search(text)
-            self?.collectionView.reloadData()
         }
 
-        // Добавлено действие для кнопки Go shopping
         emptyStateView.onAction = { [weak self] in
             self?.tabBarController?.selectedIndex = 0
         }
@@ -62,6 +68,11 @@ class WishlistViewController: UIViewController {
         emptyStateView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+
+        collectionView.register(WishlistCell.self, forCellWithReuseIdentifier: "WishlistCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.contentInset = .zero
     }
 
     private func bindViewModel() {
@@ -86,10 +97,16 @@ extension WishlistViewController: UICollectionViewDataSource, UICollectionViewDe
 
         let item = viewModel.filteredItems[indexPath.item]
         cell.configure(with: item)
-        cell.onHeartTapped = { [weak self] in
-            self?.viewModel.remove(item)
+        cell.onHeartTapped = { [weak self] product in
+            self?.viewModel.remove(product)
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let product = viewModel.filteredItems[indexPath.item]
+        let detailVC = ProductDetailViewController(productInfo: product)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
