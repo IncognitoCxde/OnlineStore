@@ -3,10 +3,8 @@ import SnapKit
 import DesignSystem
 
 final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    // коллекция не должна реализовывать методы нетворкинга 
-//    let networking: SearchNetworkingProtocol
-    var products: [Product] = []
     
+    var products: [Product] = []
     
     init(networking: SearchNetworkingProtocol = SearchNetworkingManager()) {
         let layout = UICollectionViewFlowLayout()
@@ -14,7 +12,6 @@ final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         layout.minimumLineSpacing = 12
         layout.minimumLineSpacing = 12
         layout.itemSize = CGSize(width: 192, height: 230)
-//        self.networking = networking
         
         super.init(frame: .zero, collectionViewLayout: layout)
         self.backgroundColor = AppColors.lightGrey
@@ -23,28 +20,9 @@ final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         self.dataSource = self
     }
     
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Networking
-    // не используется тут,
-//    private func fetchProducts(for request: String) {
-//        networking.fetchSearchedProducts(request: request) { [weak self] result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let fetchedProducts):
-//                    self?.products = fetchedProducts
-//                    print("search result for \(request): \(fetchedProducts)")
-//                    self?.reloadData()
-//                case .failure(let error):
-//                    print("Failed to fetch products:", error)
-//                }
-//            }
-//        }
-//    }
 
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -55,11 +33,8 @@ final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier, for: indexPath) as? ProductCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
         let product = products[indexPath.item]
         cell.configure(with: product)
-        
-        
         return cell
     }
     

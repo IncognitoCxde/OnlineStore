@@ -4,10 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Networking.xcscheme_^#shared#^_</key>
+		<key>Copy of OnlineStore.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>Networking.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>OnlineStore.xcscheme_^#shared#^_</key>
 		<dict>
@@ -23,6 +30,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>572006942E87DD3C0079250D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>57739EB22E9AA31300B70C80</key>
 		<dict>
 			<key>primary</key>
 			<true/>
