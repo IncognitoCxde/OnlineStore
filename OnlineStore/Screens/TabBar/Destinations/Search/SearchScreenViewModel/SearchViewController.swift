@@ -24,6 +24,7 @@ class SearchViewController: UIViewController {
         addSubviews()
         setupCollection()
         makeConstraints()
+        searchView.delegate = self
     }
     
     func addSubviews() {
@@ -58,5 +59,62 @@ class SearchViewController: UIViewController {
     }
 }
 
+extension SearchViewController: SearchBarViewDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        // todo: разобраться где тут должен быть isHidden, когда переводить в false
+        if searchText.isEmpty {
+//            self.collection.isHidden = true
+        }
+
+        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            // todo: разобраться где тут должен быть isHidden, когда переводить в false
+//            self.collection.isHidden = true
+            return
+        }
+
+        networkManager.fetchSearchedProducts(request: trimmed) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.collection.products = response
+                    self?.collection.reloadData()
+//                    print("Result for the latest request (\(trimmed)): \(response)")
+                case .failure(let error):
+                    print("Networking failed: \(error)")
+                }
+            }
+        }
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if let query = searchBar.text {
+            self.searchBar(searchBar, textDidChange: query)
+        }
+        print("test search bar delegate - search button clicked")
+    }
+
+    func endSearch() {
+        collection.isHidden = true
+    }
+}
+
+extension SearchView: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        delegate?.searchBar(searchBar, textDidChange: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        delegate?.searchBarSearchButtonClicked(searchBar)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        delegate?.endSearch()
+    }
+
+}
 
 

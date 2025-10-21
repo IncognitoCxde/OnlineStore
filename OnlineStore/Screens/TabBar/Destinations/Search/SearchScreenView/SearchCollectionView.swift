@@ -3,8 +3,8 @@ import SnapKit
 import DesignSystem
 
 final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    let networking: SearchNetworkingProtocol
+    // коллекция не должна реализовывать методы нетворкинга 
+//    let networking: SearchNetworkingProtocol
     var products: [Product] = []
     
     
@@ -14,15 +14,13 @@ final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollec
         layout.minimumLineSpacing = 12
         layout.minimumLineSpacing = 12
         layout.itemSize = CGSize(width: 192, height: 230)
-        self.networking = networking
+//        self.networking = networking
         
         super.init(frame: .zero, collectionViewLayout: layout)
         self.backgroundColor = AppColors.lightGrey
         self.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         self.delegate = self
         self.dataSource = self
-       
-        fetchProducts()
     }
     
     
@@ -32,21 +30,22 @@ final class CollectionView: UICollectionView, UICollectionViewDelegate, UICollec
     }
 
     // MARK: - Networking
-    private func fetchProducts() {
-        networking.fetchSearchedProducts(request: "Ra"  ) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let fetchedProducts):
-                        self?.products = fetchedProducts
-                        print(fetchedProducts)
-                        self?.reloadData()
-                    case .failure(let error):
-                        print("Failed to fetch products:", error)
-                    }
-                }
-            }
-        }
-    
+    // не используется тут,
+//    private func fetchProducts(for request: String) {
+//        networking.fetchSearchedProducts(request: request) { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let fetchedProducts):
+//                    self?.products = fetchedProducts
+//                    print("search result for \(request): \(fetchedProducts)")
+//                    self?.reloadData()
+//                case .failure(let error):
+//                    print("Failed to fetch products:", error)
+//                }
+//            }
+//        }
+//    }
+
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
