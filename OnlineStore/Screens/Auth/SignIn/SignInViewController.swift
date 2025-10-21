@@ -17,14 +17,19 @@ final class SignInViewController: BaseViewController {
 
     private let emailField = LabeledFieldView(
         title: "E-mail",
-        field: CustomTextField(placeholder: "Enter your email"))
+        field: CustomTextField(
+            placeholder: "Enter your email",
+            mode: .email
+        )
+    )
 
     private let passwordField = LabeledFieldView(
         title: "Password",
         field: CustomTextField(
             placeholder: "Enter your password",
             isSecure: true,
-            showsEyeIcon: true
+            showsEyeIcon: true,
+            mode: .password
         )
     )
 
@@ -40,6 +45,11 @@ final class SignInViewController: BaseViewController {
 
     private let signInButton = UIButton.makeStyled(style: .authPrimary, title: "Sign In")
     private let switchToSignUpButton = UIButton.makeStyled(style: .authSecondary, title: "")
+    private let skipButton: UIButton = {
+        let button = UIButton.makeStyled(style: .authSecondary, title: "Skip for now")
+        button.titleLabel?.font = AppFont.regular18pt(size: 15)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,17 +114,23 @@ final class SignInViewController: BaseViewController {
             $0.leading.trailing.equalTo(passwordField)
         }
 
-        contentView.addSubview(switchToSignUpButton)
-        switchToSignUpButton.snp.makeConstraints {
+        //  Стек для кнопок "Sign Up" и "Skip"
+        let bottomStack = UIStackView(arrangedSubviews: [switchToSignUpButton, skipButton])
+        bottomStack.axis = .vertical
+        bottomStack.spacing = 4
+        bottomStack.alignment = .center
+
+        contentView.addSubview(bottomStack)
+        bottomStack.snp.makeConstraints {
             $0.top.equalTo(stack.snp.bottom).offset(32)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(20)
         }
     }
 
     private func setupActions() {
         signInButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         switchToSignUpButton.addTarget(self, action: #selector(switchToSignUp), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(skipTapped), for: .touchUpInside)
     }
 
     private func setupAttributedSignUpText() {
@@ -162,6 +178,12 @@ final class SignInViewController: BaseViewController {
 
     @objc private func switchToSignUp() {
         navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+
+    @objc private func skipTapped() {
+        let tabBar = TabBarController()
+        tabBar.modalPresentationStyle = .fullScreen
+        present(tabBar, animated: true)
     }
 
     private func navigateToMainTab() {

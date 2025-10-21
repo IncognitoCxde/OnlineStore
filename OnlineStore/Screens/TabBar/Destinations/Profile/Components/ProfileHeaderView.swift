@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import DesignSystem
+import SDWebImage
 
 class ProfileHeaderView: UIView {
     private let avatarView = UIImageView()
@@ -9,7 +10,6 @@ class ProfileHeaderView: UIView {
     private let emailLabel = UILabel()
     private let infoStack = UIStackView()
 
-    /// Колбэк при нажатии на иконку редактирования
     var onEditTapped: (() -> Void)?
 
     init(profile: UserProfile) {
@@ -22,13 +22,11 @@ class ProfileHeaderView: UIView {
     }
 
     private func setup(profile: UserProfile) {
-        // Аватар
         avatarView.image = UIImage(named: "Avatar")
         avatarView.layer.cornerRadius = 40
         avatarView.clipsToBounds = true
         avatarView.contentMode = .scaleAspectFill
 
-        // Иконка редактирования
         editIcon.image = UIImage(named: "pencil")
         editIcon.tintColor = .white
         editIcon.backgroundColor = AppColors.customBlue
@@ -38,7 +36,6 @@ class ProfileHeaderView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapEdit))
         editIcon.addGestureRecognizer(tap)
 
-        // Имя и почта
         nameLabel.text = profile.name
         nameLabel.font = AppFont.semiBold_18pt(size: 16)
         nameLabel.textColor = .black
@@ -53,18 +50,14 @@ class ProfileHeaderView: UIView {
         infoStack.addArrangedSubview(nameLabel)
         infoStack.addArrangedSubview(emailLabel)
 
-        // Добавление вьюшек
         addSubview(avatarView)
         addSubview(editIcon)
         addSubview(infoStack)
 
-        // Layout
         avatarView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.top.equalToSuperview()
+            $0.leading.top.equalToSuperview()
             $0.size.equalTo(80)
         }
-
 
         editIcon.snp.makeConstraints {
             $0.bottom.equalTo(avatarView.snp.bottom).offset(4)
@@ -85,5 +78,19 @@ class ProfileHeaderView: UIView {
 
     @objc private func didTapEdit() {
         onEditTapped?()
+    }
+
+    func setAvatar(image: UIImage) {
+        avatarView.image = image
+    }
+
+    func setAvatar(url: String?) {
+        guard let url = url, let imageURL = URL(string: url) else { return }
+        avatarView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: "Avatar"))
+    }
+
+    func update(name: String?, email: String?) {
+        nameLabel.text = name ?? "No name"
+        emailLabel.text = email ?? "No email"
     }
 }

@@ -9,9 +9,22 @@ final class SignUpViewController: BaseViewController {
     private let contentView = UIView()
 
     private let nameField = LabeledFieldView(title: "First Name", field: CustomTextField(placeholder: "Enter your name"))
-    private let emailField = LabeledFieldView(title: "E-mail", field: CustomTextField(placeholder: "Enter your email"))
-    private let passwordField = LabeledFieldView(title: "Password", field: CustomTextField(placeholder: "Enter your password", isSecure: true, showsEyeIcon: true))
-    private let confirmPasswordField = LabeledFieldView(title: "Confirm Password", field: CustomTextField(placeholder: "Confirm your password", isSecure: true, showsEyeIcon: true))
+    private let emailField = LabeledFieldView(
+        title: "E-mail",
+        field: CustomTextField(placeholder: "Enter your email",
+        mode: .email))
+    private let passwordField = LabeledFieldView(
+        title: "Password",
+        field: CustomTextField(placeholder: "Enter your password",
+                               isSecure: true,
+                               showsEyeIcon: true,
+                               mode: .password))
+    private let confirmPasswordField = LabeledFieldView(
+        title: "Confirm Password",
+        field: CustomTextField(placeholder: "Confirm your password",
+                               isSecure: true,
+                               showsEyeIcon: true,
+                               mode: .password))
     private let accountTypeField = LabeledFieldView(title: "Account Type", field: PickerButtonField(placeholder: "Choose account type"))
 
     private let accountTypes = ["Client", "Manager"]

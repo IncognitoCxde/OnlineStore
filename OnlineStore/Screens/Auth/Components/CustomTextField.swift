@@ -2,6 +2,13 @@ import UIKit
 import SnapKit
 import DesignSystem
 
+enum TextFieldMode {
+    case email
+    case password
+    case username
+    case generic
+}
+
 final class CustomTextField: UIView {
 
     public let textField = UITextField()
@@ -18,9 +25,17 @@ final class CustomTextField: UIView {
         set { textField.inputView = newValue }
     }
 
-    init(placeholder: String, isSecure: Bool = false, showsArrow: Bool = false, showsEyeIcon: Bool = false) {
+    init(placeholder: String,
+         isSecure: Bool = false,
+         showsArrow: Bool = false,
+         showsEyeIcon: Bool = false,
+         mode: TextFieldMode = .generic) {
         super.init(frame: .zero)
-        setupUI(placeholder: placeholder, isSecure: isSecure, showsArrow: showsArrow, showsEyeIcon: showsEyeIcon)
+        setupUI(placeholder: placeholder,
+                isSecure: isSecure,
+                showsArrow: showsArrow,
+                showsEyeIcon: showsEyeIcon)
+        setMode(mode)
     }
 
     required init?(coder: NSCoder) {
@@ -49,6 +64,11 @@ final class CustomTextField: UIView {
         textField.tintColor = AppColors.customBlue
         textField.setContentHuggingPriority(.required, for: .vertical)
         textField.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        // 🔹 Базовые настройки: английская раскладка, без автозаглавной и автокоррекции
+        textField.keyboardType = .asciiCapable
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
 
         container.addSubview(textField)
         textField.snp.makeConstraints {
@@ -125,4 +145,26 @@ final class CustomTextField: UIView {
         layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.red.cgColor
     }
 
+    // метод для переключения режимов
+    public func setMode(_ mode: TextFieldMode) {
+        switch mode {
+        case .email:
+            textField.keyboardType = .emailAddress
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+        case .password:
+            textField.isSecureTextEntry = true
+            textField.keyboardType = .asciiCapable
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+        case .username:
+            textField.keyboardType = .asciiCapable
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+        case .generic:
+            textField.keyboardType = .default
+            textField.autocapitalizationType = .sentences
+            textField.autocorrectionType = .default
+        }
+    }
 }
