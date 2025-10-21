@@ -1,5 +1,5 @@
 {
-  "originHash" : "18b58a3d22d4c59b398f80cf7a316817f66a3a2e69078137a0731e6d6e47296c",
+  "originHash" : "064de06be99bbe621337b499284fd377d38052dcd6a92515333a110bf748c250",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -25,13 +25,13 @@
       "location" : "https://github.com/IncognitoCxde/DesignSystem-OnlineStore",
       "state" : {
         "branch" : "main",
-        "revision" : "d851c8be2af70d2eaa86b9eef1b83f817349936c"
+        "revision" : "1894f4e6b3d8b3512516896ba4dbe648e1392ab8"
       }
     },
     {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/firebase/firebase-ios-sdk.git",
+      "location" : "https://github.com/firebase/firebase-ios-sdk",
       "state" : {
         "revision" : "541ac342abead313f2ce0ccf33278962b5c1e43c",
         "version" : "12.4.0"
@@ -125,15 +125,6 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
-      }
-    },
-    {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage",
-      "state" : {
-        "revision" : "2053b120767c42a70bcba21095f34e4cfb54a75d",
-        "version" : "5.21.3"
       }
     },
     {

@@ -7,7 +7,7 @@ extension UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
         button.setTitleColor(config.textColor, for: .normal)
-        button.titleLabel?.font = AppFont.black_24pt(size: config.fontSize)
+        button.titleLabel?.font = AppFont.medium_18pt(size: config.fontSize)
         button.backgroundColor = config.backgroundColor
         button.layer.cornerRadius = config.cornerRadius
         button.layer.borderWidth = config.borderWidth
