@@ -5,8 +5,6 @@ import DesignSystem
 final class SignInViewController: BaseViewController {
 
     private let viewModel = SignInViewModel()
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
 
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,8 +50,8 @@ final class SignInViewController: BaseViewController {
     }()
 
     override func viewDidLoad() {
+        print("SignInViewController loaded")
         super.viewDidLoad()
-        scrollViewToAdjust = scrollView
         setupNavigation()
         setupUI()
         setupActions()
@@ -71,19 +69,9 @@ final class SignInViewController: BaseViewController {
     private func setupUI() {
         view.backgroundColor = AppColors.lightGrey
 
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        scrollView.keyboardDismissMode = .interactive
-
-        scrollView.addSubview(contentView)
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalTo(scrollView.snp.width)
-        }
-
-        contentView.addSubview(logoImageView)
+        view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(60)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(160)
         }
@@ -97,7 +85,7 @@ final class SignInViewController: BaseViewController {
         stack.spacing = 20
         stack.alignment = .fill
 
-        contentView.addSubview(stack)
+        view.addSubview(stack)
         stack.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(48)
             $0.leading.trailing.equalToSuperview().inset(24)
@@ -108,23 +96,25 @@ final class SignInViewController: BaseViewController {
         }
         signInButton.snp.makeConstraints { $0.height.equalTo(52) }
 
-        contentView.addSubview(passwordHintLabel)
+        view.addSubview(passwordHintLabel)
         passwordHintLabel.snp.makeConstraints {
             $0.top.equalTo(passwordField.snp.bottom).offset(4)
             $0.leading.trailing.equalTo(passwordField)
         }
 
-        //  Стек для кнопок "Sign Up" и "Skip"
         let bottomStack = UIStackView(arrangedSubviews: [switchToSignUpButton, skipButton])
         bottomStack.axis = .vertical
         bottomStack.spacing = 4
-        bottomStack.alignment = .center
+        bottomStack.alignment = .fill
 
-        contentView.addSubview(bottomStack)
+        view.addSubview(bottomStack)
         bottomStack.snp.makeConstraints {
             $0.top.equalTo(stack.snp.bottom).offset(32)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
+
+        switchToSignUpButton.snp.makeConstraints { $0.height.equalTo(44) }
+        skipButton.snp.makeConstraints { $0.height.equalTo(44) }
     }
 
     private func setupActions() {
@@ -162,6 +152,7 @@ final class SignInViewController: BaseViewController {
     }
 
     @objc private func signInTapped() {
+        print("Sign In tapped")
         viewModel.signIn(email: emailField.text, password: passwordField.text) { [weak self] result in
             switch result {
             case .success:
@@ -177,6 +168,7 @@ final class SignInViewController: BaseViewController {
     }
 
     @objc private func switchToSignUp() {
+        print("switchToSignUp tapped")
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
 
