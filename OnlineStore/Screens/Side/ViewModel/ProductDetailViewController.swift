@@ -132,6 +132,8 @@ class ProductDetailViewController: UIViewController {
         }
     }
     
+    // MARK: - ScrollView
+    
     func setUpScrollView() {
         scrollView.bouncesVertically = true
         scrollView.showsVerticalScrollIndicator = true
@@ -150,6 +152,8 @@ class ProductDetailViewController: UIViewController {
         }
     }
     
+    // MARK: - AddSubViews
+    
     func addSubViews() {
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
@@ -160,7 +164,12 @@ class ProductDetailViewController: UIViewController {
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(addToCart)
         contentView.addSubview(buyNowButton)
+        
+        addToCart.addTarget(self, action: #selector(addToCartTapped), for: .touchUpInside)
+        buyNowButton.addTarget(self, action: #selector(buyNowTapped), for: .touchUpInside)
     }
+    
+    // MARK: - UI
     
     func setUpUI() {
         imageView.setImage(from: productInfo.images?.first)
@@ -186,6 +195,8 @@ class ProductDetailViewController: UIViewController {
         descriptionLabel.textAlignment = .left
         descriptionLabel.textColor = AppColors.arsenicDark
     }
+    
+    // MARK: - Constraints
     
     func setUpConstraints() {
         imageView.snp.makeConstraints {
@@ -285,16 +296,46 @@ class ProductDetailViewController: UIViewController {
     // MARK: - Handle Back Tap
     @objc func handleBackButton() {
         self.dismiss(animated: true)
+        
     }
     
     // MARK: - Handle Buy Now
+    
     @objc func buyNowTapped() {
-        // TODO: Implement buy now logic
+        
     }
     
     // MARK: - Handle Add to Cart
     @objc func addToCartTapped() {
-        // TODO: Implement add to cart logic
+        
+        let newItem = CartItem(
+            id: UUID(),
+            name: productInfo.title ?? "Unknown Product",
+            imageName: productInfo.images?.first ?? "",
+            price: productInfo.price ?? 0,
+            quantity: 1,
+            isSelected: true
+        )
+        
+        CartManager.shared.addItem(newItem)
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        
+        let originalTitle = addToCart.title(for: .normal)
+        UIView.animate(withDuration: 0.12,
+                       animations: {
+            self.addToCart.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.12) {
+                self.addToCart.transform = .identity
+            }
+        })
+        
+        addToCart.setTitle("Added ✓", for: .normal)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.addToCart.setTitle(originalTitle, for: .normal)
+        }
     }
     
     // MARK: - Cart Button Handle
