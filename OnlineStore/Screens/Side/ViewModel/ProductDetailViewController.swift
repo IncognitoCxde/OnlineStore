@@ -1,7 +1,3 @@
-//  ProductDetailViewController - BM
-
-// MARK: - Imports
-
 import UIKit
 import SnapKit
 import DesignSystem
@@ -11,7 +7,6 @@ class ProductDetailViewController: UIViewController {
     // MARK: - Variables
     
     let screenTitle = UILabel()
-    
     let cartButton: UIButton = {
         let button = UIButton()
         let image = AppIcons.cart
@@ -75,9 +70,19 @@ class ProductDetailViewController: UIViewController {
         view.clipsToBounds = true
         return view
     }()
-
     
-    // MARK: - ViewDidLoad
+    // MARK: - Init
+    
+    init(productInfo: ProductInfo) {
+        self.productInfo = productInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +93,16 @@ class ProductDetailViewController: UIViewController {
         addSubViews()
         setUpUI()
         setUpConstraints()
+        setUpActions()
+        updateFavoriteUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFavoriteUI()
+    }
+    
+    // MARK: - Setup
     
     func setUpNav() {
         view.addSubview(screenTitle)
@@ -103,40 +117,22 @@ class ProductDetailViewController: UIViewController {
         }
         
         view.addSubview(cartButton)
-        cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
         cartButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(70)
             make.trailing.equalToSuperview().inset(20)
         }
     }
     
-    // MARK: - Init
-    init(productInfo: ProductInfo) {
-        self.productInfo = productInfo
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Back Button
     func setUpBackButton() {
         view.addSubview(backButton)
-        
         backButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(80)
             make.leading.equalToSuperview().inset(20)
             make.height.equalTo(20)
         }
-        
-        backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
     }
     
-    // MARK: - Scroll
-    
     func setUpScrollView() {
-        
         scrollView.bouncesVertically = true
         scrollView.showsVerticalScrollIndicator = true
         scrollView.bouncesHorizontally = false
@@ -150,7 +146,7 @@ class ProductDetailViewController: UIViewController {
         
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalTo(scrollView)
+            make.edges.equalTo(scrollView)
         }
     }
     
@@ -165,8 +161,6 @@ class ProductDetailViewController: UIViewController {
         contentView.addSubview(addToCart)
         contentView.addSubview(buyNowButton)
     }
-    
-    // MARK: - UI
     
     func setUpUI() {
         imageView.setImage(from: productInfo.images?.first)
@@ -191,70 +185,102 @@ class ProductDetailViewController: UIViewController {
         descriptionLabel.font = AppFont.regular18pt(size: 16)
         descriptionLabel.textAlignment = .left
         descriptionLabel.textColor = AppColors.arsenicDark
-        
     }
-    
-    // MARK: - Constraints
     
     func setUpConstraints() {
-        
-        imageView.snp.makeConstraints { make in
-            make.height.equalTo(230)
-            make.width.equalTo(380)
-            make.leading.trailing.equalTo(contentView).inset(10)
-            make.top.equalToSuperview().inset(20)
+        imageView.snp.makeConstraints {
+            $0.height.equalTo(230)
+            $0.width.equalTo(380)
+            $0.leading.trailing.equalTo(contentView).inset(10)
+            $0.top.equalToSuperview().inset(20)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(15)
-            make.leading.equalTo(imageView.snp.leading).inset(8)
-            make.trailing.equalToSuperview().inset(100)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(15)
+            $0.leading.equalTo(imageView.snp.leading).inset(8)
+            $0.trailing.equalToSuperview().inset(100)
         }
         
-        favoriteButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        favBackground.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.width.height.equalTo(40)
         }
         
-        
-        favBackground.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.trailing.equalToSuperview().inset(30)
-            make.width.height.equalTo(40)
-
-        }
-            
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(15)
-            make.leading.equalTo(titleLabel.snp.leading)
+        favoriteButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        descriptionTitle.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(15)
-            make.leading.equalTo(priceLabel.snp.leading)
-            
+        priceLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
+            $0.leading.equalTo(titleLabel.snp.leading)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(descriptionTitle.snp.bottom).offset(9)
-            make.leading.trailing.equalTo(contentView).inset(20)
+        descriptionTitle.snp.makeConstraints {
+            $0.top.equalTo(priceLabel.snp.bottom).offset(15)
+            $0.leading.equalTo(priceLabel.snp.leading)
         }
         
-        buyNowButton.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(30)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(45)
-
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(descriptionTitle.snp.bottom).offset(9)
+            $0.leading.trailing.equalTo(contentView).inset(20)
         }
         
-        addToCart.snp.makeConstraints { make in
-            make.top.equalTo(buyNowButton.snp.bottom).offset(8)
-            make.bottom.equalToSuperview().inset(10)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(45)
+        buyNowButton.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(45)
         }
         
-        
+        addToCart.snp.makeConstraints {
+            $0.top.equalTo(buyNowButton.snp.bottom).offset(8)
+            $0.bottom.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(45)
+        }
     }
+    
+    func setUpActions() {
+        backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+        cartButton.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
+        favoriteButton.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Favorite Logic
+    
+    @objc func favoriteTapped() {
+        guard let id = productInfo.id else { return }
+        let isFavorite = FavoritesManager.shared.isFavorite(id)
+
+        if isFavorite {
+            FavoritesManager.shared.remove(id)
+        } else {
+            FavoritesManager.shared.add(productInfo)
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
+
+        updateFavoriteUI()
+
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+                           self.favoriteButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                       },
+                       completion: { _ in
+                           UIView.animate(withDuration: 0.2) {
+                               self.favoriteButton.transform = .identity
+                           }
+                       })
+    }
+
+    private func updateFavoriteUI() {
+        guard let id = productInfo.id else { return }
+        let isFavorite = FavoritesManager.shared.isFavorite(id)
+        favoriteButton.tintColor = isFavorite ? AppColors.customBlue : AppColors.grey
+        let icon = isFavorite ? AppIcons.heartActive : AppIcons.heart
+        favoriteButton.setImage(icon.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+
     
     // MARK: - Handle Back Tap
     @objc func handleBackButton() {
@@ -262,18 +288,16 @@ class ProductDetailViewController: UIViewController {
     }
     
     // MARK: - Handle Buy Now
-    
     @objc func buyNowTapped() {
-        
+        // TODO: Implement buy now logic
     }
     
-    // MARK: - Handle add to cart
+    // MARK: - Handle Add to Cart
     @objc func addToCartTapped() {
-        
+        // TODO: Implement add to cart logic
     }
     
-    // MARK: - Cart button handle
-    
+    // MARK: - Cart Button Handle
     @objc func cartButtonTapped() {
         let cartVC = CartViewController()
         cartVC.modalPresentationStyle = .fullScreen
