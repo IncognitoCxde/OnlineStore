@@ -56,8 +56,20 @@ class WishlistCell: UICollectionViewCell {
     }
 
     @objc private func addToCartTapped() {
+        
         guard let product = product else { return }
         guard !isAddedToCart else { return }
+        
+        let newItem = CartItem(
+            id: UUID(),
+            name: product.title ?? "Unknown Product",
+            imageName: product.images?.first ?? "",
+            price: product.price ?? 0,
+            quantity: 1,
+            isSelected: true
+        )
+        
+        CartManager.shared.addItem(newItem)
 
         onAddToCartTapped?(product)
 
@@ -76,6 +88,8 @@ class WishlistCell: UICollectionViewCell {
                 self.addToCartButton.backgroundColor = AppColors.customBlue
             })
         }
+        
+        
     }
 
     private func setupUI() {
