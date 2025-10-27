@@ -1,6 +1,6 @@
 # 🛍️ OnlineStore
 
-**OnlineStore** — a learning project written in Swift alongside dependencies such as SnapKit & it's own DesignSystem
+**OnlineStore** — a learning project written in Swift alongside dependencies such as SnapKit, Firebase & it's own DesignSystem
 
 ## About the Project
 
