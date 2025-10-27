@@ -1,44 +1,31 @@
 # 🛍️ OnlineStore
 
-**OnlineStore** — это учебное приложение интернет-магазина, созданное на языке **Swift** с использованием **UIKit**, **SnapKit** и собственной **Design System**.
+**OnlineStore** — a learning project written in Swift alongside dependencies such as SnapKit & it's own DesignSystem
 
-## 🚀 О проекте
+## About the Project
 
-OnlineStore — это демонстрационное приложение, которое показывает работу базового интернет-магазина:
-- просмотр товаров;
-- добавление товара в корзину;
-- удаление товаров из корзины;
-- просмотр итоговой суммы заказа.
+OnlineStore — a demonstrative app which shows the basics of an online shopping experience, made with the help of Platzi Fake Store API, you can:
+- view products;
+- add products to cart;
+- wishlist products;
+- proceed to payment.
 
-Проект разработан в учебных целях для практики создания интерфейсов и логики на языке Swift.
+This app was created for educational purposes!
 
-## 🧩 Технологии
+## ⚙️ If you would like to use this project in any way
 
-- **Swift**
-- **UIKit**
-- **SnapKit** — для верстки интерфейсов с помощью кода
-- **Design System** — собственный набор UI-компонентов для единых стилей приложения
+Use for educational purposes.
 
-## ⚙️ Установка и запуск
+Credit and tag authors if used.
 
-1. Склонируйте проект из GitHub:
-   ```bash
-   git clone https://github.com/IncognitoCxde/OnlineStore.git
-   ```
-2. Откройте проект в **Xcode** (`OnlineStore.xcodeproj` или `OnlineStore.xcworkspace`).
-3. Убедитесь, что все зависимости установлены:
-   - SnapKit
-   - DesignSystem
-4. Соберите проект (**Cmd + B**) и запустите его на симуляторе (**Cmd + R**).
-
-## 👩‍💻 Авторы
-
-Проект разработан командой:
-- [@RahimovaSamira](https://github.com/RahimovaSamira)
-- [@AazizovA](https://github.com/AazizovA)
-- [@di_di_di_beom](https://github.com/di_di_di_beom)
-- [@biochemistsnotes](https://github.com/biochemistsnotes)
+Follow github usage guidelines.
 
 ---
 
-© 2025 OnlineStore. Все права защищены.
+Special thanks to:
+
+@AzizovaA (Github: https://github.com/azizaazizova)
+
+And other members of BT.
+
+© 2025 OnlineStore. All rights reserved.
