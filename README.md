@@ -1,25 +1,29 @@
-# 🛍️ OnlineStore
+🛍️ ## OnlineStore
 
-**OnlineStore** — an educational project written in Swift alongside dependencies such as SnapKit, Firebase & it's own DesignSystem
+** OnlineStore **  — an educational iOS project written in Swift, using SnapKit, Firebase, and a custom DesignSystem.
 
-## About the Project
+⸻
 
-OnlineStore — a demonstrative app which shows the basics of an online shopping experience, made with the help of Platzi Fake Store API, you can:
-- view products;
-- add products to cart;
-- wishlist products;
-- proceed to payment.
+📖 About the Project
 
-This app was created for educational purposes!
+OnlineStore is a demonstrative app showcasing the fundamentals of an e-commerce experience, powered by the Platzi Fake Store API.
 
-## ⚙️ If you would like to use this project in any way
+With this app, users can:
+	•	🧾 View products
+	•	🛒 Add products to cart
+	•	❤️ Wishlist items
+	•	💳 Proceed to payment
 
-Use for educational purposes.
+This app was created purely for educational and demonstration purposes.
 
-Credit and tag authors if used.
+⸻
 
-Follow github usage guidelines.
+⚙️ Usage & Guidelines
 
+If you’d like to use or learn from this project:
+	•	✅ Use for educational purposes
+	•	Please credit and tag the author(s) if shared or modified
+	•	Follow GitHub’s usage and attribution guidelines
 ---
 
 Special thanks to:
